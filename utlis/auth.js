@@ -1,4 +1,4 @@
-import { setCookie, deleteCookie } from "cookies-next";
+
 
 export const getUser = () => {
   const users = localStorage.getItem("users");
@@ -10,33 +10,36 @@ export const setUser = (users) => {
 };
 
 export const signUp = (username, email, password) => {
-  const users = getUser();
+  const users = JSON.parse(localStorage.getItem('users')) || [];
 
-  if (users.some((user) => user.email === email)) {
-    return { success: false, mesaage: "Email already in use" };
+  if (users.some(user => user.email === email)) {
+      return { success: false, message: 'Email is already registered' };
   }
 
   const newUser = { username, email, password };
   users.push(newUser);
-  setUser(users);
+  localStorage.setItem('users', JSON.stringify(users));
 
-  return { success: true, message: "User created successfully" };
+  return { success: true, message: 'User registered successfully' };
 };
 
-export const signIn = (email, password) => {
-  const users = getUser();
-  const user = users.find(
-    (user) => user.email === email && user.password === password
-  );
+
+export const login = (email, password) => {
+  const users = JSON.parse(localStorage.getItem('users')) || [];
+  const user = users.find(user => user.email === email && user.password === password);
+
   if (user) {
-    // Set a session cookie on successful login
-    setCookie("userSession", email, { maxAge: 3600, path: "/" });
-    return { success: true, message: "Login successful" };
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('currentUser', JSON.stringify({ username: user.username }));
+    window.location.href = '/';
+    return { success: true, message: 'Login successful' };
+  } else {
+    return { success: false, message: 'Invalid credentials' };
   }
-  return { success: false, message: "Invalid credentials" };
 };
 
-export const logut = () => {
-  deleteCookie("userSession");
-  return { success: true, message: "Logged out successfully" };
+
+export const logout = () => {
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('currentUser');
 };

@@ -18,7 +18,7 @@ const CategoryPage = ({ params }) => {
   }
   console.log(catBanner);
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 mt-16 ">
       {catBanner.length > 0 && (
         <div className="w-full mb-14 ">
           <Image

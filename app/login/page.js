@@ -3,25 +3,38 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { LuEyeOff, LuEye } from "react-icons/lu";
-
+import { login } from '@/utlis/auth';
+import { Toast } from "../components/Toast";
 export default function SignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [message, setMessage] = useState('');
+  const [toast, setToast] = useState({ message: "", type: "" });
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Add your sign-in logic here
-    console.log('Sign in with:', email, password)
-  }
-
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const result = login(email, password);
+    setMessage(result.message);
+   
+    if (result.success) {
+      setToast({ message: result.message, type: "success" });
+      setEmail('')
+      setPassword('')
+    } else {
+      setToast({ message: result.message, type: "error" });
+    }
+};
+const closeToast = () => {
+  setToast({ message: "", type: "" }); // Close toast manually
+};
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
         <div className="px-6 py-8">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">Sign in to your account</h2>
           <p className="text-center text-gray-600 mb-8">Enter your email and password to sign in</p>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email
@@ -84,6 +97,13 @@ export default function SignIn() {
           </div>
         </div>
       </div>
+      {toast.message && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={closeToast}
+        />
+      )}
     </div>
   )
 }

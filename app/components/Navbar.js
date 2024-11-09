@@ -4,14 +4,19 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import categories from "../../data/category.json";
+import { login, logout } from "@/utlis/auth";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  console.log(isLoggedIn)
   if (!categories || categories.length === 0) {
     return <div>Loading categories...</div>;
   }
-
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    window.location.reload();
+  };
   return (
     <nav
       className={`fixed w-full z-10 top-0 left-0 transition-all duration-300 ease-in-out bg-white `}
@@ -51,6 +56,17 @@ export default function Navbar() {
 
           {/* User Account / Login Section */}
           <div className="hidden md:flex items-center space-x-4">
+            {isLoggedIn ? <>
+              <Link href="/cart" className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md text-base font-medium">
+                  Cart
+                </Link>
+                <Link href="/wishlist" className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md text-base font-medium">
+                  Wishlist
+                </Link>
+                <button onClick={() => { handleLogout(); setIsOpen(false); }} className="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">
+                  Logout
+                </button>
+            </> : <>
             <Link
               href="/login"
               className="bg-gray-200 text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
@@ -65,6 +81,8 @@ export default function Navbar() {
             >
               Sign Up
             </Link>
+            </>}
+            
           </div>
 
           {/* Mobile Menu Button */}
