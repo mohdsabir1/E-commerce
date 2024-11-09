@@ -1,0 +1,23 @@
+[
+    {
+      "id": "c1",
+      "name": "Electronics",
+      "slug": "electronics"
+    },
+    {
+      "id": "c2",
+      "name": "Fashion",
+      "slug": "fashion"
+    },
+    {
+      "id": "c3",
+      "name": "Home Appliances",
+      "slug": "home-appliances"
+    },
+    {
+      "id": "c4",
+      "name": "Books",
+      "slug": "books"
+    }
+  ]
+  

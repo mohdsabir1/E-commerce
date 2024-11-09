@@ -1,0 +1,26 @@
+[
+    {
+        "id":"b1",
+        "bannerImg":"/img/catBanner1.png",
+        "category_slug": "electronics",
+        "name":"Electronic Banner"
+    },
+    {
+        "id":"b2",
+        "bannerImg":"/img/catBanner2.png",
+        "category_slug": "fashion",
+        "name":"Fashion Banner"
+    },
+    {
+        "id":"b3",
+        "bannerImg":"/img/catBanner3.png",
+        "category_slug": "home-appliances",
+        "name":"Home Appliances Banner"
+    },
+    {
+        "id":"b4",
+        "bannerImg":"/img/catBanner4.png",
+        "category_slug": "books",
+        "name":"Books Banner"
+    }
+]
