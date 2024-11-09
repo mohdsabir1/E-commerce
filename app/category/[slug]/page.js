@@ -6,8 +6,7 @@ import Image from "next/image"; // Assuming you'll use Image later if needed
 import Link from "next/link";
 const CategoryPage = ({ params }) => {
   const { slug } = params;
-  console.log(slug); // Filter the products based on the category slug
-  const categoryProducts = products.filter(
+    const categoryProducts = products.filter(
     (product) => product.category_slug === slug
   );
   const catBanner = Banner.filter((banner) => banner.category_slug === slug);
