@@ -3,11 +3,15 @@ import { getCurrentUserId } from '@/utlis/cartUtlis';
 import { useSelector, useDispatch } from 'react-redux';
 // import { removeFromCart, updateQuantity } from '../store/cartSlice';
 
-
+import { useCart } from '@/hooks/useCart';
+import Image from 'next/image';
+import { removeFromCart, updateQuantity } from '@/redux/cartSlice';
 export default function CartPage() {
   const dispatch = useDispatch();
   const userId = getCurrentUserId();
+  useCart(userId);
   const cartItems = useSelector((state) => state.cart.items[userId] || []);
+  console.log("the cart list",cartItems)
 
   const handleUpdateQuantity = (productId, newQuantity) => {
     if (newQuantity > 0) {

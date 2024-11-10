@@ -5,18 +5,15 @@ import Link from "next/link";
 import Image from "next/image";
 import categories from "../../data/category.json";
 import { login, logout } from "@/utlis/auth";
-
+import { LuShoppingCart, LuHeart, LuUser } from "react-icons/lu";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const isLoggedIn = localStorage.getItem('isLoggedIn');
-  console.log(isLoggedIn)
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  console.log(isLoggedIn);
   if (!categories || categories.length === 0) {
     return <div>Loading categories...</div>;
   }
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    window.location.reload();
-  };
+ 
   return (
     <nav
       className={`fixed w-full z-10 top-0 left-0 transition-all duration-300 ease-in-out bg-white `}
@@ -25,10 +22,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <div className="flex items-center">
-            <Link
-              href="/"
-              className=""
-            >
+            <Link href="/" className="">
               <Image
                 src="/img/logo.webp"
                 alt="logo"
@@ -56,33 +50,42 @@ export default function Navbar() {
 
           {/* User Account / Login Section */}
           <div className="hidden md:flex items-center space-x-4">
-            {isLoggedIn ? <>
-              <Link href="/cart" className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md text-base font-medium">
-                  Cart
+            {isLoggedIn ? (
+              <>
+                <Link
+                  href="/cart"
+                  className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 "
+                >
+                  <LuShoppingCart />
                 </Link>
-                <Link href="/wishlist" className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md text-base font-medium">
-                  Wishlist
+                <Link href="/wishlist" className=" text-gray-700 hover:text-indigo-600 hover:bg-indigo-50">
+                  <LuHeart />
                 </Link>
-                <button onClick={() => { handleLogout(); setIsOpen(false); }} className="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">
-                  Logout
-                </button>
-            </> : <>
-            <Link
-              href="/login"
-              className="bg-gray-200 text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
+                <Link
+                  href="/my-profile"
+                  className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 "
+                >
+                  <LuUser />
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="bg-gray-200 text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
                          hover:bg-gray-300 hover:shadow-md transform hover:-translate-y-0.5"
-            >
-              Login
-            </Link>
-            <Link
-              href="/sign-up"
-              className="bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/sign-up"
+                  className="bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
                          hover:bg-gray-700 hover:shadow-lg transform hover:-translate-y-0.5"
-            >
-              Sign Up
-            </Link>
-            </>}
-            
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -149,20 +152,45 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="pt-4 border-t border-gray-200">
-            <Link
-              href="/login"
-              className="block text-gray-100 hover:text-indigo-300 hover:bg-indigo-50 px-3 py-2 rounded-md transition-all duration-300 ease-in-out"
-              onClick={() => setIsOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              href="/sign-up"
-              className="block bg-gray-800 text-white hover:bg-gray-700 px-3 py-2 rounded-md transition-all duration-300 ease-in-out mt-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Sign Up
-            </Link>
+            {isLoggedIn ? (
+              <>
+              <div className="flex items-center">
+              <Link
+                  href="/cart"
+                  className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 "
+                >
+                  <LuShoppingCart />
+                </Link>
+                <Link href="/wishlist" className="px-3">
+                  <LuHeart />
+                </Link>
+                <Link  href='/my-profile'>
+                <LuUser />
+                
+                </Link>
+              
+              </div>
+              
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="block bg-gray-200 text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
+                         hover:bg-gray-300 hover:shadow-md transform hover:-translate-y-0.5"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/sign-up"
+                  className="block bg-gray-800 text-white hover:bg-gray-700 px-3 py-2 rounded-md transition-all duration-300 ease-in-out mt-2"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
