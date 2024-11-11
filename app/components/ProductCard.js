@@ -6,23 +6,60 @@ import { useEffect, useState } from 'react'
 import { FaRegHeart, FaAngleRight } from 'react-icons/fa'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
+import { addWishlist } from '@/redux/wishlistSlice'
 
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import { useDispatch,useSelector } from 'react-redux'
+import { getCurrentUserId } from '@/utlis/cartUtlis'
+import { Toast } from './Toast'
 
 export default function ProductSlider({ products }) {
+  const dispatch = useDispatch()
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [domLoaded, setDomLoaded] = useState(false)
-
+  const [toast, setToast] = useState({ message: "", type: "" });
+  const {message,type} = useSelector((state)=>state.wishlist)
   useEffect(() => {
     setDomLoaded(true)
   }, [])
+  useEffect(() => {
+    const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
+    if (storedIsLoggedIn) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
+  const closeToast = () => {
+    setToast({ message: "", type: "" }); // Close toast manually
+  };
   const handleAddToWishlist = (product) => {
-    // Implement your wishlist logic here
-    console.log('Added to wishlist:', product)
-  }
+    if (isLoggedIn) {
+      const userId = getCurrentUserId();
+      if (userId) {
+        dispatch(
+          addWishlist  ({
+            userId,
+            product: {
+              id: product.id,
+              title: product.title,
+              offer_price: product.offer_price,
+              price: product.price,
+              thumbnail_image: product.thumbnail_image,
+            },
+          })
+        );
+
+        setToast({ message: message, type: type });
+        // alert("Item added to the cart!");
+      }
+    } else {
+      setToast({ message: message, type: "error" });
+      // alert('Please sign in first');
+    }
+  };
 
   return (
     <div className="w-full mt-10" >
@@ -77,9 +114,9 @@ export default function ProductSlider({ products }) {
                     </div>
                   </div>
                   <div className="flex flex-col space-y-2">
-                    <button className="w-full px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors duration-300">
+                    {/* <button className="w-full px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors duration-300">
                       Add to Cart
-                    </button>
+                    </button> */}
                     <Link href={`/product/${product.slug}`} passHref>
                       <button className="w-full px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors duration-300 flex items-center justify-center">
                         Check
@@ -92,6 +129,9 @@ export default function ProductSlider({ products }) {
             </SwiperSlide>
           ))}
         </Swiper>
+      )}
+       {toast.message && (
+        <Toast message={toast.message} type={toast.type} onClose={closeToast} />
       )}
     </div>
   )
