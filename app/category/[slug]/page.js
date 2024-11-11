@@ -1,12 +1,30 @@
-import React from "react";
+"use client";
+import React, { useState ,useEffect} from "react";
 import products from "../../../data/product.json";
 import Banner from "../../../data/banner.json";
 import { FaRegHeart, FaAngleRight } from "react-icons/fa";
 import Image from "next/image"; // Assuming you'll use Image later if needed
 import Link from "next/link";
+import { getUser } from "@/utlis/auth";
+import { getCurrentUserId } from "@/utlis/cartUtlis";
+import { useDispatch, useSelector } from "react-redux";
+import { Toast } from "@/app/components/Toast";
+import { addWishlist } from "@/redux/wishlistSlice";
+
 const CategoryPage = ({ params }) => {
-  const { slug } = params;
-    const categoryProducts = products.filter(
+
+  const dispatch = useDispatch();
+  const { slug } = React.use(params);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [toast, setToast] = useState({ message: "", type: "" });
+  const {message,type} = useSelector((state)=>state.wishlist)
+  useEffect(() => {
+    const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
+    if (storedIsLoggedIn) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+  const categoryProducts = products.filter(
     (product) => product.category_slug === slug
   );
   const catBanner = Banner.filter((banner) => banner.category_slug === slug);
@@ -16,7 +34,35 @@ const CategoryPage = ({ params }) => {
   if (categoryProducts.length === 0) {
     return <div>No products found for this category.</div>;
   }
-  console.log(catBanner);
+
+  const handleAddToWishlist = (product) => {
+    if (isLoggedIn) {
+      const userId = getCurrentUserId();
+      if (userId) {
+        dispatch(
+          addWishlist  ({
+            userId,
+            product: {
+              id: product.id,
+              title: product.title,
+              price: product.offer_price,
+              thumbnail_image: product.thumbnail_image,
+            },
+          })
+        );
+
+        setToast({ message: message, type: type });
+        // alert("Item added to the cart!");
+      }
+    } else {
+      setToast({ message: message, type: "error" });
+      // alert('Please sign in first');
+    }
+  };
+  const closeToast = () => {
+    setToast({ message: "", type: "" }); // Close toast manually
+  };
+  // console.log(catBanner);
   return (
     <div className="container mx-auto p-4 mt-16 ">
       {catBanner.length > 0 && (
@@ -53,7 +99,10 @@ const CategoryPage = ({ params }) => {
               </div>
 
               <button className="absolute top-0 right-0 m-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300">
-                <FaRegHeart className="w-6 h-6 text-gray-600 hover:text-red-500 transition-colors duration-300" />
+                <FaRegHeart
+                onClick={() => handleAddToWishlist(product)}
+                  className="w-6 h-6 text-gray-600 hover:text-red-500 transition-colors duration-300"
+                />
               </button>
             </div>
 
@@ -79,7 +128,7 @@ const CategoryPage = ({ params }) => {
                 </button>
 
                 <Link
-                 href={`/product/${product.slug}`}
+                  href={`/product/${product.slug}`}
                   as={`/product/${product.slug}`}
                   passHref
                   legacyBehavior
@@ -114,6 +163,9 @@ const CategoryPage = ({ params }) => {
           </div>
         ))}
       </div> */}
+      {toast.message && (
+        <Toast message={toast.message} type={toast.type} onClose={closeToast} />
+      )}
     </div>
   );
 };

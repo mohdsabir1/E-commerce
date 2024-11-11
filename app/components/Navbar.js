@@ -1,19 +1,38 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo,useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import categories from "../../data/category.json";
-import { login, logout } from "@/utlis/auth";
+
 import { LuShoppingCart, LuHeart, LuUser } from "react-icons/lu";
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-  console.log(isLoggedIn);
+import { useSelector } from "react-redux";
+import { getCurrentUserId } from "@/utlis/cartUtlis";
+import { useCart } from "@/hooks/useCart";
+
+export default function Navbar() {  
+  const [userId, setUserId] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Load userId and login state on component mount
+  useEffect(() => {
+    const user = getCurrentUserId();  // Fetch userId
+    setUserId(user);
+    setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
+  }, []);
+
+  // Make sure userId is available before using useSelector
+  const cartItems = useSelector((state) => state.cart.items[userId] || []);
+
+  const itemCount = useMemo(() => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  }, [cartItems]);
+
   if (!categories || categories.length === 0) {
     return <div>Loading categories...</div>;
   }
- 
+
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <nav
       className={`fixed w-full z-10 top-0 left-0 transition-all duration-300 ease-in-out bg-white `}
@@ -54,11 +73,29 @@ export default function Navbar() {
               <>
                 <Link
                   href="/cart"
-                  className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 "
+                  className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 mx-2 "
                 >
-                  <LuShoppingCart />
+                    <div className="relative py-2">
+                  {/* {itemCount && itemCount >0 ? <> 
+                    <div className="bottom-3 absolute left-4">
+                      <p className="flex h-2 w-3 items-center justify-center rounded-full bg-gray-800 p-2 text-xs text-white">
+                        {itemCount}
+                      </p>
+                    </div>
+                    </> : <></>} */}
+                {itemCount > 0 && <div className="bottom-3 absolute left-4">
+                      <p className="flex h-2 w-3 items-center justify-center rounded-full bg-gray-800 p-2 text-xs text-white">
+                        {itemCount}
+                      </p>
+                    </div>}
+                  
+                    <LuShoppingCart />
+                  </div>
                 </Link>
-                <Link href="/wishlist" className=" text-gray-700 hover:text-indigo-600 hover:bg-indigo-50">
+                <Link
+                  href="/wishlist"
+                  className=" text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 mx-2"
+                >
                   <LuHeart />
                 </Link>
                 <Link
@@ -154,23 +191,23 @@ export default function Navbar() {
           <div className="pt-4 border-t border-gray-200">
             {isLoggedIn ? (
               <>
-              <div className="flex items-center">
-              <Link
-                  href="/cart"
-                  className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 "
-                >
-                  <LuShoppingCart />
-                </Link>
-                <Link href="/wishlist" className="px-3">
-                  <LuHeart />
-                </Link>
-                <Link  href='/my-profile'>
-                <LuUser />
-                
-                </Link>
-              
-              </div>
-              
+                <div className="flex items-center">
+                  <Link
+                    href="/cart"
+                    className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 "
+                  >
+                    <div>
+                      <LuShoppingCart />
+                      <p> {itemCount}</p>
+                    </div>
+                  </Link>
+                  <Link href="/wishlist" className="px-3">
+                    <LuHeart />
+                  </Link>
+                  <Link href="/my-profile">
+                    <LuUser />
+                  </Link>
+                </div>
               </>
             ) : (
               <>

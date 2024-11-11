@@ -1,54 +1,78 @@
-'use client'
+"use client";
 import React, { use } from "react";
 import products from "../../../data/product.json";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/redux/cartSlice";
 import { getCurrentUserId } from "@/utlis/cartUtlis";
-import { FaArrowUp ,FaArrowDown } from "react-icons/fa";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { Toast } from "@/app/components/Toast";
+
 export default function ProductDetail({ params }) {
-  // Unwrap the params using React.use()
   const dispatch = useDispatch();
   const unwrappedParams = use(params);
   const { slug } = unwrappedParams;
   const product = products.find((product) => product.slug === slug);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [openSpecs, setOpenSpecs] = useState({}); 
+  const [openSpecs, setOpenSpecs] = useState({});
+  const [toast, setToast] = useState({ message: "", type: "" });
+  
+  // Track if this is the initial mount
+  const [isInitialMount, setIsInitialMount] = useState(true);
+  
+  const { message, type } = useSelector((state) => state.cart);
+
   useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
+    const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
     if (storedIsLoggedIn) {
       setIsLoggedIn(true);
     }
+    // After first mount, set isInitialMount to false
+    setIsInitialMount(false);
   }, []);
 
-
-const handleAddToCart = () => {
+  const handleAddToCart = () => {
     if (isLoggedIn) {
       const userId = getCurrentUserId();
       if (userId) {
-        dispatch(addToCart({
-          userId,
-          product: {
-            id: product.id,
-            title: product.title,
-            price: product.offer_price,
-            thumbnail_image: product.thumbnail_image
-          }
-        }));
-        alert("Item added to the cart!");
+        dispatch(
+          addToCart({
+            userId,
+            product: {
+              id: product.id,
+              title: product.title,
+              price: product.offer_price,
+              thumbnail_image: product.thumbnail_image,
+            },
+          })
+        );
+        setToast({
+          message: "Item added successfully",
+          type: "success"
+        });
       }
     } else {
-      alert('Please sign in first');
+      setToast({
+        message: "Please sign in first",
+        type: "error"
+      });
     }
+  };
+
+  // Only show toast if it's not the initial mount and we have a message
+ 
+  const closeToast = () => {
+    setToast({ message: "", type: "" });
   };
 
   const toggleSpec = (key) => {
     setOpenSpecs((prev) => ({
       ...prev,
-      [key]: !prev[key]
+      [key]: !prev[key],
     }));
   };
+
   if (!product) {
     return <div>Product not found</div>;
   }
@@ -56,7 +80,7 @@ const handleAddToCart = () => {
   return (
     <div className="container mx-auto p-4 mt-24">
       <div className="grid grid-cols-12 marker:items-center">
-        <div className="w-full  col-span-12 md:col-span-6">
+        <div className="w-full col-span-12 md:col-span-6">
           <div>
             <Image
               src={product.thumbnail_image}
@@ -67,17 +91,12 @@ const handleAddToCart = () => {
               className="w-96 h-fit"
             />
           </div>
-
-          {/* <div className="col-span-6">
-            <p>helllo</p>
-            <p>helllo</p>
-            <p>helllo</p>
-            <p>helllo</p>
-          </div> */}
         </div>
 
-        <div className="col-span-12 md:col-span-6 ">
-          <h1 className="md:text-3xl text-xl font-bold text-gray-900">{product.title}</h1>
+        <div className="col-span-12 md:col-span-6">
+          <h1 className="md:text-3xl text-xl font-bold text-gray-900">
+            {product.title}
+          </h1>
           <p className="md:text-lg text-sm text-gray-700 mt-2">
             {product.short_description}
           </p>
@@ -97,7 +116,7 @@ const handleAddToCart = () => {
           </div>
 
           <div className="mt-6 md:flex md:flex-row flex flex-col gap-5 items-center justify-between">
-            <button 
+            <button
               onClick={handleAddToCart}
               className="w-full md:w-48 px-3 py-3 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors duration-300"
             >
@@ -107,7 +126,7 @@ const handleAddToCart = () => {
               Buy Now
             </button>
           </div>
-          
+
           <div className="mt-6 flex flex-col justify-center">
             <h2 className="text-2xl font-semibold text-gray-800">Features:</h2>
             <ul className="list-disc pl-6 mt-2">
@@ -121,7 +140,7 @@ const handleAddToCart = () => {
         </div>
       </div>
 
-      <div className="mt-12 w-full ">
+      <div className="mt-12 w-full">
         <h2 className="text-2xl font-semibold text-gray-800 mt-6">
           Specifications:
         </h2>
@@ -147,6 +166,9 @@ const handleAddToCart = () => {
             ))}
         </div>
       </div>
+      {toast.message && (
+        <Toast message={toast.message} type={toast.type} onClose={closeToast} />
+      )}
     </div>
   );
 }

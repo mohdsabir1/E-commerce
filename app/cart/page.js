@@ -1,17 +1,20 @@
-'use client'
-import { getCurrentUserId } from '@/utlis/cartUtlis';
-import { useSelector, useDispatch } from 'react-redux';
+"use client";
+import { getCurrentUserId } from "@/utlis/cartUtlis";
+import { useSelector, useDispatch } from "react-redux";
 // import { removeFromCart, updateQuantity } from '../store/cartSlice';
-
-import { useCart } from '@/hooks/useCart';
-import Image from 'next/image';
-import { removeFromCart, updateQuantity } from '@/redux/cartSlice';
+import { Toast } from "../components/Toast";
+import { useCart } from "@/hooks/useCart";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { removeFromCart, updateQuantity } from "@/redux/cartSlice";
 export default function CartPage() {
   const dispatch = useDispatch();
   const userId = getCurrentUserId();
+
   useCart(userId);
+  const { message, type } = useSelector((state) => state.cart);
+  const [toast, setToast] = useState({ message: "", type: "" });
   const cartItems = useSelector((state) => state.cart.items[userId] || []);
-  console.log("the cart list",cartItems)
 
   const handleUpdateQuantity = (productId, newQuantity) => {
     if (newQuantity > 0) {
@@ -21,9 +24,32 @@ export default function CartPage() {
 
   const handleRemoveItem = (productId) => {
     dispatch(removeFromCart({ userId, productId }));
+    setToast({
+      message: "Item removed successfully",
+      type: "success",
+    });
   };
+  useEffect(() => {
+    if (message && type) {
+      // Set the toast message and type from Redux
+      setToast({ message, type });
 
-  const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      // Automatically close the toast after 3 seconds
+      const toastTimer = setTimeout(() => {
+        setToast({ message: "", type: "" }); // Clear toast after a delay
+      }, 3000);
+
+      // Cleanup the timer when the component unmounts or the message changes
+      return () => clearTimeout(toastTimer);
+    }
+  }, [message, type]);
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+  const closeToast = () => {
+    setToast({ message: "", type: "" }); // Close toast manually
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -34,7 +60,10 @@ export default function CartPage() {
         <>
           <div className="space-y-4">
             {cartItems.map((item) => (
-              <div key={item.id} className="flex items-center justify-between border-b pb-4">
+              <div
+                key={item.id}
+                className="flex items-center justify-between border-b pb-4"
+              >
                 <div className="flex items-center space-x-4">
                   <Image
                     src={item.thumbnail_image}
@@ -51,14 +80,18 @@ export default function CartPage() {
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center space-x-2">
                     <button
-                      onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                      onClick={() =>
+                        handleUpdateQuantity(item.id, item.quantity - 1)
+                      }
                       className="px-2 py-1 border rounded"
                     >
                       -
                     </button>
                     <span>{item.quantity}</span>
                     <button
-                      onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                      onClick={() =>
+                        handleUpdateQuantity(item.id, item.quantity + 1)
+                      }
                       className="px-2 py-1 border rounded"
                     >
                       +
@@ -75,14 +108,15 @@ export default function CartPage() {
             ))}
           </div>
           <div className="mt-6">
-            <div className="text-xl font-bold">
-              Total: ${total.toFixed(2)}
-            </div>
+            <div className="text-xl font-bold">Total: ${total.toFixed(2)}</div>
             <button className="mt-4 w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
               Proceed to Checkout
             </button>
           </div>
         </>
+      )}
+      {toast.message && (
+        <Toast message={toast.message} type={toast.type} onClose={closeToast} />
       )}
     </div>
   );

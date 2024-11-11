@@ -5,7 +5,8 @@ const cartSlice = createSlice({
   initialState: {
     items: {},  // Organized by userId
     loading: false,
-    error: null
+    error: null,
+    message:''
   },
   reducers: {
     setUserCart: (state, action) => {
@@ -21,8 +22,12 @@ const cartSlice = createSlice({
       const existingItem = state.items[userId].find(item => item.id === product.id);
       if (existingItem) {
         existingItem.quantity += quantity;
+        state.message = 'The item Added in Cart!';
+                state.type= 'success'
       } else {
         state.items[userId].push({ ...product, quantity });
+        state.message = 'This item Added in Cart!';
+                state.type= 'success'
       }
       
       // Save to localStorage
@@ -33,6 +38,8 @@ const cartSlice = createSlice({
       if (state.items[userId]) {
         state.items[userId] = state.items[userId].filter(item => item.id !== productId);
         localStorage.setItem(`cart_${userId}`, JSON.stringify(state.items[userId]));
+        state.message = 'This item Removed from Cart!';
+                state.type= 'success'
       }
     },
     updateQuantity: (state, action) => {
@@ -42,6 +49,8 @@ const cartSlice = createSlice({
         if (item) {
           item.quantity = quantity;
           localStorage.setItem(`cart_${userId}`, JSON.stringify(state.items[userId]));
+          state.message = 'Quantity update!';
+                state.type= 'success'
         }
       }
     },
