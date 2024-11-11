@@ -9,3 +9,7 @@ export const getCurrentUserId = () => {
     const cartData = localStorage.getItem(`cart_${userId}`);
     return cartData ? JSON.parse(cartData) : [];
   };
+  export const loadUserWishlist = (userId) => {
+    const wishlistData = localStorage.getItem(`wishlist_${userId}`);
+    return wishlistData ? JSON.parse(wishlistData) : [];
+  };

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // import { getCurrentUserId, loadUserCart } from '../utils/cartUtils';
 import { setUserCart } from '@/redux/cartSlice';
-import { getCurrentUserId, loadUserCart } from '@/utlis/cartUtlis';
+import { getCurrentUserId, loadUserCart ,loadUserWishlist} from '@/utlis/cartUtlis';
 import { setWishlist } from '@/redux/wishlistSlice';
 export const useCart = () => {
   const dispatch = useDispatch();
@@ -21,12 +21,12 @@ export const useCart = () => {
 };
 export const useWishlist = () => {
   const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.cart);
+  const wishlist = useSelector((state) => state.wishlist);
 
   useEffect(() => {
     const userId = getCurrentUserId();
     if (userId) {
-      const userWishlist = loadUserCart(userId);
+      const userWishlist = loadUserWishlist(userId);
       dispatch(setWishlist({ userId, items: userWishlist }));
     }
   }, [dispatch]);

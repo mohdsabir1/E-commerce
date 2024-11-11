@@ -45,7 +45,8 @@ const CategoryPage = ({ params }) => {
             product: {
               id: product.id,
               title: product.title,
-              price: product.offer_price,
+              offer_price: product.offer_price,
+              price: product.price,
               thumbnail_image: product.thumbnail_image,
             },
           })
