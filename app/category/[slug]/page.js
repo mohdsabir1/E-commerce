@@ -124,9 +124,9 @@ const CategoryPage = ({ params }) => {
               </div>
 
               <div className="flex flex-col space-y-2">
-                <button className="w-full px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors duration-300">
+                {/* <button className="w-full px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors duration-300">
                   Add to Cart
-                </button>
+                </button> */}
 
                 <Link
                   href={`/product/${product.slug}`}

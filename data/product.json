@@ -8,6 +8,8 @@
     "offer_price": 59.99,
     "discount": 14.29,
     "category_slug": "electronics",
+    "isBestSeller":false,
+    "isFeature":false,
     "short_description": "Noise-cancelling wireless Bluetooth headphones with 30 hours of battery life.",
     "thumbnail_image": "/img/headphone1.webp",
     "gallery_images": [
@@ -40,6 +42,8 @@
     "offer_price": 899.99,
     "discount": 10.00,
     "category_slug": "electronics",
+    "isBestSeller":true,
+    "isFeature":false,
     "short_description": "Latest Smartphone with 256GB Storage, 12MP camera, and 5G support.",
     "thumbnail_image": "/img/phone1.webp",
     "gallery_images": [
@@ -73,6 +77,8 @@
     "offer_price": 399.99,
     "discount": 20.00,
     "category_slug": "electronics",
+    "isBestSeller":false,
+    "isFeature":false,
     "short_description": "55-inch 4K UHD Smart TV with HDR.",
     "thumbnail_image": "/img/led1.webp",
     "gallery_images": [
@@ -105,6 +111,8 @@
     "offer_price": 159.99,
     "discount": 20.00,
     "category_slug": "electronics",
+    "isBestSeller":false,
+    "isFeature":false,
     "short_description": "Smartwatch with heart rate monitor and GPS.",
     "thumbnail_image": "/img/watch1.png",
     "gallery_images": [
@@ -136,6 +144,8 @@
     "offer_price": 109.99,
     "discount": 15.38,
     "category_slug": "fashion",
+    "isBestSeller":true,
+    "isFeature":false,
     "short_description": "Premium leather jacket for men with vintage finish.",
     "thumbnail_image": "/img/jacket1.png",
     "gallery_images": [
@@ -166,6 +176,8 @@
     "offer_price": 79.99,
     "discount": 11.11,
     "category_slug": "fashion",
+    "isBestSeller":true,
+    "isFeature":false,
     "short_description": "Cozy and stylish woolen coat for women.",
     "thumbnail_image": "/img/womancoat1.webp",
     "gallery_images": [
@@ -196,6 +208,8 @@
     "offer_price": 39.99,
     "discount": 20.00,
     "category_slug": "fashion",
+    "isBestSeller":false,
+    "isFeature":false,
     "short_description": "Comfortable sneakers for casual wear.",
     "thumbnail_image": "/img/sneaker1.png",
     "gallery_images": [
@@ -225,6 +239,8 @@
     "offer_price": 24.99,
     "discount": 16.67,
     "category_slug": "fashion",
+    "isBestSeller":false,
+    "isFeature":true,
     "short_description": "Trendy sunglasses for women.",
     "thumbnail_image": "/img/glasses1.png",
     "gallery_images": [
@@ -253,6 +269,8 @@
     "price": 139.99,
     "offer_price": 129.99,
     "discount": 7.14,
+    "isBestSeller":false,
+    "isFeature":false,
     "category_slug": "home-appliances",
     "short_description": "Compact microwave oven for everyday use.",
     "thumbnail_image": "/img/oven1.webp",
@@ -283,8 +301,10 @@
     "offer_price": 39.99,
     "discount": 20.00,
     "category_slug": "home-appliances",
+    "isBestSeller":false,
+    "isFeature":false,
     "short_description": "800W high-speed blender for smoothies and more.",
-    "thumbnail_image": "/img/blender1.png",
+    "thumbnail_image": "/img/blender.jpg",
     "gallery_images": [
       "/images/blender-1.jpg",
       "/images/blender-2.jpg"
@@ -312,6 +332,8 @@
     "offer_price": 79.99,
     "discount": 11.11,
     "category_slug": "home-appliances",
+    "isBestSeller":false,
+    "isFeature":true,
     "short_description": "LightWeight cordless vacuum cleaner.",
     "thumbnail_image": "/img/cleaner1.webp",
     "gallery_images": [
@@ -341,6 +363,8 @@
     "price": 179.99,
     "offer_price": 159.99,
     "discount": 11.11,
+    "isBestSeller":false,
+    "isFeature":false,
     "category_slug": "home-appliances",
     "short_description": "Air purifier with HEPA filter for clean indoor air.",
     "thumbnail_image": "/img/purifier.webp",
@@ -371,6 +395,8 @@
     "offer_price": 7.99,
     "discount": 20.02,
     "category_slug": "books",
+    "isBestSeller":false,
+    "isFeature":false,
     "short_description": "A classic novel by F. Scott Fitzgerald.",
     "thumbnail_image": "/images/gatsby-thumbnail.jpg",
     "gallery_images": [
@@ -399,6 +425,8 @@
     "offer_price": 10.99,
     "discount": 15.41,
     "category_slug": "books",
+    "isBestSeller":false,
+    "isFeature":false,
     "short_description": "Pulitzer Prize-winning novel by Harper Lee.",
     "thumbnail_image": "/images/mockingbird-thumbnail.jpg",
     "gallery_images": [
@@ -427,6 +455,8 @@
     "offer_price": 6.99,
     "discount": 22.24,
     "category_slug": "books",
+    "isBestSeller":true,
+    "isFeature":true,
     "short_description": "Dystopian novel set in a totalitarian regime.",
     "thumbnail_image": "/images/1984-thumbnail.jpg",
     "gallery_images": [
@@ -454,6 +484,8 @@
     "price": 7.99,
     "offer_price": 5.99,
     "discount": 25.03,
+    "isBestSeller":false,
+    "isFeature":false,
     "category_slug": "books",
     "short_description": "A classic romance novel by Jane Austen.",
     "thumbnail_image": "/images/pride-prejudice-thumbnail.jpg",
@@ -483,6 +515,8 @@
     "offer_price": 9.99,
     "discount": 16.67,
     "category_slug": "books",
+    "isBestSeller":false,
+    "isFeature":false,
     "short_description": "A novel by J.D. Salinger about a disillusioned teenager.",
     "thumbnail_image": "/images/catcher-thumbnail.jpg",
     "gallery_images": [
@@ -510,6 +544,8 @@
     "price": 14.99,
     "offer_price": 12.99,
     "discount": 13.34,
+    "isBestSeller":false,
+    "isFeature":true,
     "category_slug": "books",
     "short_description": "The epic tale of Captain Ahab and his hunt for the white whale.",
     "thumbnail_image": "/images/moby-dick-thumbnail.jpg",
@@ -539,6 +575,8 @@
     "offer_price": 16.99,
     "discount": 15.00,
     "category_slug": "books",
+    "isBestSeller":false,
+    "isFeature":true,
     "short_description": "Leo Tolstoy's historical epic set during the Napoleonic wars.",
     "thumbnail_image": "/images/war-and-peace-thumbnail.jpg",
     "gallery_images": [
@@ -567,6 +605,8 @@
     "offer_price": 11.99,
     "discount": 14.29,
     "category_slug": "books",
+    "isBestSeller":false,
+    "isFeature":false,
     "short_description": "A dystopian novel by Aldous Huxley about a future society.",
     "thumbnail_image": "/images/brave-new-world-thumbnail.jpg",
     "gallery_images": [
@@ -584,6 +624,388 @@
       "Language": "English",
       "Pages": "268",
       "Binding": "Paperback"
+    }
+  },
+  {
+    "id": "p21",
+    "title": "Mivi DuoPods i7 Earbuds",
+    "slug": "mivi-duoPods-i7-earbuds",
+    "sku": "MICI220",
+    "price": 30.99,
+    "offer_price": 25,
+    "discount": 10,
+    "category_slug": "electronics",
+    "isBestSeller":false,
+    "isFeature":true,
+    "short_description": "3D Soundstage: Experience the 3rd dimension of sound with the sound flowing seamlessly, effusing a true depth audio spectacle. Hear every instrument in a song clearly and distinctly. The 3rd dimensional aspect of the soundstage makes it immersive thus offering a surreal audio experience.",
+    "thumbnail_image": "/img/mivi.jpg",
+    "gallery_images": [
+      "/images/brave-new-world-1.jpg",
+      "/images/brave-new-world-2.jpg"
+    ],
+   "features": [
+      "Noise-cancelling technology",
+      "30-hour battery life",
+      "Bluetooth 5.0 for seamless connection",
+      "Built-in microphone for hands-free calling",
+      "Foldable design for easy Storage",
+      "Comfortable over-ear design"
+    ],
+    "specifications": {
+      "Brand": "Your Brand Name",
+      "Color": "Black/White",
+      "Bluetooth Version": "5.0",
+      "Battery Life": "30 hours",
+      "Charging Time": "2 hours",
+      "Weight": "250g"
+    }
+  },
+  {
+    "id": "p22",
+    "title": "ASUS Vivobook Go 15 (2023)",
+    "slug": "asus-vivobook-go-15",
+    "sku": "MICI220",
+    "price": 30.99,
+    "offer_price": 25,
+    "discount": 10,
+    "category_slug": "electronics",
+    "isBestSeller":true,
+    "isFeature":true,
+    "short_description": "3D Soundstage: Experience the 3rd dimension of sound with the sound flowing seamlessly, effusing a true depth audio spectacle. Hear every instrument in a song clearly and distinctly. The 3rd dimensional aspect of the soundstage makes it immersive thus offering a surreal audio experience.",
+    "thumbnail_image": "/img/asus.jpg",
+    "gallery_images": [
+      "/images/brave-new-world-1.jpg",
+      "/images/brave-new-world-2.jpg"
+    ],
+   "features": [
+      "Processor: AMD Ryzen 5 7520U Mobile Processor (4-core/8-thread, 4MB cache, up to 4.3 GHz max boost)",
+      "Memory: 16GB DDR5 on board with| Storage: 512GB M.2 NVMe PCIe 3.0 SSD",
+      "Display: 15.6-inch (39.624cm), FHD (1920 x 1080) 16:9 aspect ratio, 60Hz refresh rate, LED Backlit, 250nits, 45% NTSC color gamut, Anti-glare display",
+      "Integrated: AMD Radeon Graphics",
+      "Operating System: Windows 11 Home with lifetime validity | Software Included: Pre-Installed Office Home and Student 2021 | 1-Year McAfee Anti-Virus"
+    ],
+    "specifications": {
+      "Brand": "Asus",
+      "Color": "Black",
+      "Bluetooth & Wifi": "5.3 & 6E",
+      "RAM ": "16 GB",
+      "SSD ": "1TB Nvme",
+      "Processor": "Ryzen 4",
+      "Charging Time": "2 hours",
+      "Weight": "2.5KG",
+      "Series": "Vivobook Go 15 (2023)"
+    }
+  },{
+    "id": "p23",
+    "title": "Mens Cotton Regular Fit Sky Blue Colour Shirt Urban Light",
+    "slug": "mens-cotton-regular-fit",
+    "sku": "FAS21",
+    "price": 110.99,
+    "offer_price": 100.99,
+    "discount": 10.38,
+    "category_slug": "fashion",
+    "isBestSeller":false,
+    "isFeature":true,
+    "short_description": "Premium leather jacket for men with vintage finish.",
+    "thumbnail_image": "/img/shirt1.png",
+    "gallery_images": [
+      "/images/leather-jacket-1.jpg",
+      "/images/leather-jacket-2.jpg"
+    ],
+    "features": [
+      "Genuine leather",
+      "Vintage finish",
+      "Zipper and button closure",
+      "Multiple pockets"
+    ],
+    "specifications": {
+      "Brand": "Your Brand Name",
+      "Material": "Genuine leather",
+      "Color": "Brown/Black",
+      "Closure": "Zipper & button",
+      "Pockets": "2 exterior, 2 interior",
+      "Weight": "1.5kg"
+    }
+  },
+  {
+    "id": "p24",
+    "title": "Gaming Laptop 16GB RAM",
+    "slug": "gaming-laptop-16gb-ram",
+    "sku": "GL310",
+    "price": 1199.99,
+    "offer_price": 999.99,
+    "discount": 16.67,
+    "category_slug": "electronics",
+    "isBestSeller": true,
+    "isFeature": true,
+    "short_description": "High-performance gaming laptop with 16GB RAM and RTX graphics.",
+    "thumbnail_image": "/img/laptop1.webp",
+    "gallery_images": [
+      "/img/laptop2.webp",
+      "/img/laptop3.webp"
+    ],
+    "features": [
+      "16GB RAM",
+      "RTX 3060 graphics card",
+      "144Hz refresh rate",
+      "512GB SSD storage",
+      "Backlit keyboard"
+    ],
+    "specifications": {
+      "Brand": "GamingTech",
+      "Processor": "Intel i7",
+      "RAM": "16GB",
+      "Graphics Card": "RTX 3060",
+      "Storage": "512GB SSD",
+      "Display": "15.6-inch FHD"
+    }
+  },
+  {
+    "id": "p25",
+    "title": "Men's Casual Sneakers",
+    "slug": "mens-casual-sneakers",
+    "sku": "FC200",
+    "price": 79.99,
+    "offer_price": 69.99,
+    "discount": 12.50,
+    "category_slug": "fashion",
+    "isBestSeller": false,
+    "isFeature": false,
+    "short_description": "Comfortable and stylish sneakers for everyday wear.",
+    "thumbnail_image": "/img/sneakers1.webp",
+    "gallery_images": [
+      "/img/sneakers2.webp",
+      "/img/sneakers3.webp"
+    ],
+    "features": [
+      "Breathable material",
+      "Rubber sole",
+      "Lightweight design",
+      "Available in multiple colors"
+    ],
+    "specifications": {
+      "Brand": "FashionLine",
+      "Material": "Canvas",
+      "Colors": "Black, White, Blue",
+      "Sizes": "7-12 US",
+      "Weight": "600g"
+    }
+  },
+  {
+    "id": "p26",
+    "title": "Smart Refrigerator",
+    "slug": "smart-refrigerator",
+    "sku": "HA001",
+    "price": 1499.99,
+    "offer_price": 1399.99,
+    "discount": 6.67,
+    "category_slug": "home-appliances",
+    "isBestSeller": true,
+    "isFeature": false,
+    "short_description": "Smart refrigerator with Wi-Fi and touch control panel.",
+    "thumbnail_image": "/img/smart-fridge.jpg",
+    "gallery_images": [
+      "/img/fridge2.webp",
+      "/img/fridge3.webp"
+    ],
+    "features": [
+      "Wi-Fi connectivity",
+      "Energy efficient",
+      "Touch control panel",
+      "Temperature management"
+    ],
+    "specifications": {
+      "Brand": "HomeAppli",
+      "Capacity": "500L",
+      "Energy Rating": "A++",
+      "Color": "Silver",
+      "Weight": "75kg"
+    }
+  },
+  {
+    "id": "p27",
+    "title": "4K Ultra HD Projector",
+    "slug": "4k-ultra-hd-projector",
+    "sku": "PR200",
+    "price": 399.99,
+    "offer_price": 349.99,
+    "discount": 12.50,
+    "category_slug": "electronics",
+    "isBestSeller": false,
+    "isFeature": false,
+    "short_description": "Portable 4K Ultra HD projector for home theater experience.",
+    "thumbnail_image": "/img/projector1.webp",
+    "gallery_images": [
+      "/img/projector2.webp",
+      "/img/projector3.webp"
+    ],
+    "features": [
+      "4K UHD resolution",
+      "Portable design",
+      "HDMI and USB support",
+      "Built-in speaker"
+    ],
+    "specifications": {
+      "Brand": "ProjectoTech",
+      "Resolution": "3840x2160",
+      "Lamp Life": "30,000 hours",
+      "Brightness": "3000 lumens",
+      "Weight": "2kg"
+    }
+  },
+  {
+    "id": "p28",
+    "title": "Women's Classic Handbag",
+    "slug": "womens-classic-handbag",
+    "sku": "FH110",
+    "price": 59.99,
+    "offer_price": 49.99,
+    "discount": 16.67,
+    "category_slug": "fashion",
+    "isBestSeller": true,
+    "isFeature": false,
+    "short_description": "Elegant leather handbag for women with ample storage.",
+    "thumbnail_image": "/img/handbag1.webp",
+    "gallery_images": [
+      "/img/handbag2.webp",
+      "/img/handbag3.webp"
+    ],
+    "features": [
+      "Premium leather material",
+      "Zipper closure",
+      "Multiple pockets",
+      "Detachable shoulder strap"
+    ],
+    "specifications": {
+      "Brand": "Elegance",
+      "Material": "Leather",
+      "Color": "Black, Brown",
+      "Dimensions": "12x8x5 inches",
+      "Weight": "500g"
+    }
+  },
+  {
+    "id": "p29",
+    "title": "Air Fryer",
+    "slug": "air-fryer",
+    "sku": "HA210",
+    "price": 129.99,
+    "offer_price": 109.99,
+    "discount": 15.39,
+    "category_slug": "home-appliances",
+    "isBestSeller": false,
+    "isFeature": true,
+    "short_description": "Compact air fryer with adjustable temperature control.",
+    "thumbnail_image": "/img/air-fry.jpg",
+    "gallery_images": [
+      "/img/airfryer2.webp",
+      "/img/airfryer3.webp"
+    ],
+    "features": [
+      "Rapid air circulation",
+      "Adjustable temperature",
+      "Non-stick basket",
+      "Dishwasher safe parts"
+    ],
+    "specifications": {
+      "Brand": "KitchenPro",
+      "Capacity": "3.5L",
+      "Power": "1500W",
+      "Temperature Range": "80-200°C",
+      "Weight": "3kg"
+    }
+  },
+  {
+    "id": "p30",
+    "title": "Men's Leather Wallet",
+    "slug": "mens-leather-wallet",
+    "sku": "FW305",
+    "price": 29.99,
+    "offer_price": 24.99,
+    "discount": 16.67,
+    "category_slug": "fashion",
+    "isBestSeller": false,
+    "isFeature": false,
+    "short_description": "Classic leather wallet with multiple compartments.",
+    "thumbnail_image": "/img/wallet1.webp",
+    "gallery_images": [
+      "/img/wallet2.webp",
+      "/img/wallet3.webp"
+    ],
+    "features": [
+      "Premium leather",
+      "RFID blocking",
+      "Multiple card slots",
+      "Compact design"
+    ],
+    "specifications": {
+      "Brand": "ClassicStyle",
+      "Material": "Leather",
+      "Color": "Black, Brown",
+      "Dimensions": "4.5x3.5 inches",
+      "Weight": "100g"
+    }
+  },
+  {
+    "id": "p31",
+    "title": "Men's Athletic Sneakers",
+    "slug": "mens-athletic-sneakers",
+    "sku": "FAS100",
+    "price": 75.99,
+    "offer_price": 65.99,
+    "discount": 13.16,
+    "category_slug": "fashion",
+    "isBestSeller": true,
+    "isFeature": false,
+    "short_description": "Durable and comfortable sneakers ideal for athletic use.",
+    "thumbnail_image": "/img/athletic-sneakers.webp",
+    "gallery_images": [
+      "/img/sneakers-detail-1.webp",
+      "/img/sneakers-detail-2.webp"
+    ],
+    "features": [
+      "Breathable mesh",
+      "Padded collar",
+      "Non-slip sole",
+      "Available in multiple colors"
+    ],
+    "specifications": {
+      "Brand": "ActiveRun",
+      "Material": "Mesh",
+      "Color": "Grey, Black",
+      "Sizes": "7-13 US",
+      "Weight": "600g"
+    }
+  },
+  {
+    "id": "p32",
+    "title": "Bluetooth Home Speaker",
+    "slug": "bluetooth-home-speaker",
+    "sku": "BHS300",
+    "price": 99.99,
+    "offer_price": 79.99,
+    "discount": 20.00,
+    "category_slug": "electronics",
+    "isBestSeller": false,
+    "isFeature": false,
+    "short_description": "High-quality sound with deep bass Bluetooth home speaker.",
+    "thumbnail_image": "/img/home-speaker.jpg",
+    "gallery_images": [
+      "/img/home-speaker-2.webp",
+      "/img/home-speaker-3.webp"
+    ],
+    "features": [
+      "Bluetooth 5.0",
+      "Rich sound with deep bass",
+      "Portable and lightweight",
+      "Battery life: up to 10 hours"
+    ],
+    "specifications": {
+      "Brand": "SoundWave",
+      "Power Output": "15W",
+      "Battery Life": "10 hours",
+      "Color": "Black",
+      "Weight": "1kg"
     }
   }
 ]

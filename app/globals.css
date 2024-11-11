@@ -19,3 +19,8 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+.swiper-button-prev:after, .swiper-button-next:after 
+{
+  font-size: 1rem !important;
+  color: rgb(2, 2, 2) !important;
+}
