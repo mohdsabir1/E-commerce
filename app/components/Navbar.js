@@ -1,22 +1,20 @@
 "use client";
 
-import { useState, useMemo,useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import categories from "../../data/category.json";
-
 import { LuShoppingCart, LuHeart, LuUser } from "react-icons/lu";
 import { useSelector } from "react-redux";
 import { getCurrentUserId } from "@/utlis/cartUtlis";
-import { useCart } from "@/hooks/useCart";
+import { useSearchParams } from "next/navigation";
 
-export default function Navbar() {  
+export default function Navbar() {
   const [userId, setUserId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Load userId and login state on component mount
   useEffect(() => {
-    const user = getCurrentUserId();  // Fetch userId
+    const user = getCurrentUserId(); // Fetch userId
     setUserId(user);
     setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
   }, []);
@@ -33,9 +31,16 @@ export default function Navbar() {
   }
 
   const [isOpen, setIsOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(null); // Track active category for dropdown
+
+  // Toggle dropdown for category
+  const toggleDropdown = (categoryId) => {
+    setActiveCategory(activeCategory === categoryId ? null : categoryId);
+  };
+
   return (
     <nav
-      className={`fixed w-full z-10 top-0 left-0 transition-all duration-300 ease-in-out bg-white `}
+      className={`fixed w-full z-10 top-0 left-0 transition-all duration-300 ease-in-out bg-white`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
@@ -55,15 +60,34 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-1 ml-10">
             {categories.map((cat) => (
-              <Link
+              <div
                 key={cat.id}
-                href={`/category/${cat.slug}`}
-                className={`text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
-                           hover:bg-indigo-50 hover:shadow-md transform hover:-translate-y-0.5
-                          `}
+                className="relative"
+                onMouseEnter={() => toggleDropdown(cat.id)} // Hover to show subcategories
+                onMouseLeave={() => toggleDropdown(null)} // Hide subcategories when hover ends
               >
-                {cat.name}
-              </Link>
+                <Link
+                  href={`/category/${cat.slug}`}
+                  className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out"
+                >
+                  {cat.name}
+                </Link>
+
+                {/* Dropdown for Subcategories */}
+                {activeCategory === cat.id && (
+                  <div className="absolute left-0 top-5 w-48 mt-2 bg-white shadow-lg rounded-md overflow-hidden z-10">
+                    {cat.subCat.map((subCat) => (
+                      <Link
+                        key={subCat.id}
+                        href={`/category/${cat.slug}?subcat=${subCat.slug}`}
+                        className="block text-gray-700 hover:text-indigo-600 px-4 py-2 text-sm transition-all duration-300 ease-in-out"
+                      >
+                        {subCat.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
 
@@ -75,26 +99,20 @@ export default function Navbar() {
                   href="/cart"
                   className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 mx-2 "
                 >
-                    <div className="relative py-2">
-                  {/* {itemCount && itemCount >0 ? <> 
-                    <div className="bottom-3 absolute left-4">
-                      <p className="flex h-2 w-3 items-center justify-center rounded-full bg-gray-800 p-2 text-xs text-white">
-                        {itemCount}
-                      </p>
-                    </div>
-                    </> : <></>} */}
-                {itemCount > 0 && <div className="bottom-3 absolute left-4">
-                      <p className="flex h-2 w-3 items-center justify-center rounded-full bg-gray-800 p-2 text-xs text-white">
-                        {itemCount}
-                      </p>
-                    </div>}
-                  
+                  <div className="relative py-2">
+                    {itemCount > 0 && (
+                      <div className="bottom-3 absolute left-4">
+                        <p className="flex h-2 w-3 items-center justify-center rounded-full bg-gray-800 p-2 text-xs text-white">
+                          {itemCount}
+                        </p>
+                      </div>
+                    )}
                     <LuShoppingCart />
                   </div>
                 </Link>
                 <Link
                   href="/wishlist"
-                  className=" text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 mx-2"
+                  className="text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 mx-2"
                 >
                   <LuHeart />
                 </Link>
@@ -109,15 +127,13 @@ export default function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="bg-gray-200 text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
-                         hover:bg-gray-300 hover:shadow-md transform hover:-translate-y-0.5"
+                  className="bg-gray-200 text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out hover:bg-gray-300 hover:shadow-md transform hover:-translate-y-0.5"
                 >
                   Login
                 </Link>
                 <Link
                   href="/sign-up"
-                  className="bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
-                         hover:bg-gray-700 hover:shadow-lg transform hover:-translate-y-0.5"
+                  className="bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out hover:bg-gray-700 hover:shadow-lg transform hover:-translate-y-0.5"
                 >
                   Sign Up
                 </Link>
@@ -179,56 +195,30 @@ export default function Navbar() {
       >
         <div className="px-6 py-4 space-y-4">
           {categories.map((cat) => (
-            <Link
-              key={cat.id}
-              href={`/category/${cat.slug}`}
-              className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ease-in-out"
-              onClick={() => setIsOpen(false)}
-            >
-              {cat.name}
-            </Link>
-          ))}
-          <div className="pt-4 border-t border-gray-200">
-            {isLoggedIn ? (
-              <>
-                <div className="flex items-center">
+            <div key={cat.id}>
+              <Link
+                href={`/category/${cat.slug}`}
+                className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ease-in-out"
+                onClick={() => setIsOpen(false)}
+              >
+                {cat.name}
+              </Link>
+
+              {/* Dropdown for Mobile (Subcategories) */}
+              <div className="space-y-2 pl-4">
+                {cat.subCat.map((subCat) => (
                   <Link
-                    href="/cart"
-                    className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 "
+                    key={subCat.id}
+                    href={`/category/${cat.slug}?subcat=${subCat.slug}`}
+                    className="block text-gray-700 hover:text-indigo-600 px-4 py-2 text-sm transition-all duration-300 ease-in-out"
+                    onClick={() => setIsOpen(false)}
                   >
-                    <div>
-                      <LuShoppingCart />
-                      <p> {itemCount}</p>
-                    </div>
+                    {subCat.name}
                   </Link>
-                  <Link href="/wishlist" className="px-3">
-                    <LuHeart />
-                  </Link>
-                  <Link href="/my-profile">
-                    <LuUser />
-                  </Link>
-                </div>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className="block bg-gray-200 text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out
-                         hover:bg-gray-300 hover:shadow-md transform hover:-translate-y-0.5"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/sign-up"
-                  className="block bg-gray-800 text-white hover:bg-gray-700 px-3 py-2 rounded-md transition-all duration-300 ease-in-out mt-2"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </nav>

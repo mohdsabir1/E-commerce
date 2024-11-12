@@ -86,7 +86,8 @@ export default function ProductSlider({ products }) {
           {products.map((product) => (
             <SwiperSlide key={product.id}>
               <div className="relative bg-white rounded-lg shadow-lg h-full">
-                <div className="relative h-64 flex flex-col justify-center items-center">
+                <div className="relative h-[220px] flex flex-col justify-center items-center">
+                <Link href={`/product/${product.slug}`} passHref>
                   <Image
                     src={product.thumbnail_image}
                     alt={product.title}
@@ -95,6 +96,7 @@ export default function ProductSlider({ products }) {
                     priority={true}
                     className="cursor-pointer hover:opacity-75 transition-transform duration-300 hover:scale-105"
                   />
+                  </Link>
                   <div className="absolute top-0 left-0 bg-red-500 text-white px-2 py-1 m-2 rounded-md text-sm font-bold">
                     {product.discount}% OFF
                   </div>

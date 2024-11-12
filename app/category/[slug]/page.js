@@ -1,46 +1,56 @@
-"use client";
-import React, { useState ,useEffect} from "react";
+'use client';
+import React, { useState, useEffect } from "react";
 import products from "../../../data/product.json";
+import categories from "../../../data/category.json";
 import Banner from "../../../data/banner.json";
 import { FaRegHeart, FaAngleRight } from "react-icons/fa";
-import Image from "next/image"; // Assuming you'll use Image later if needed
+import Image from "next/image";
 import Link from "next/link";
-import { getUser } from "@/utlis/auth";
 import { getCurrentUserId } from "@/utlis/cartUtlis";
 import { useDispatch, useSelector } from "react-redux";
 import { Toast } from "@/app/components/Toast";
 import { addWishlist } from "@/redux/wishlistSlice";
+import { useSearchParams } from 'next/navigation';
 
 const CategoryPage = ({ params }) => {
-
   const dispatch = useDispatch();
   const { slug } = React.use(params);
+  const searchParams = useSearchParams();
+  const subCategorySlug = searchParams.get('subcat');
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [toast, setToast] = useState({ message: "", type: "" });
-  const {message,type} = useSelector((state)=>state.wishlist)
+  const [activeSubCategory, setActiveSubCategory] = useState(subCategorySlug || 'all');
+  const { message, type } = useSelector((state) => state.wishlist);
+
+  // Get current category and its subcategories
+  const currentCategory = categories.find(cat => cat.slug === slug);
+  const subCategories = currentCategory?.subCat || [];
+
   useEffect(() => {
     const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
     if (storedIsLoggedIn) {
       setIsLoggedIn(true);
     }
   }, []);
-  const categoryProducts = products.filter(
-    (product) => product.category_slug === slug
-  );
+
+  // Filter products based on category and subcategory
+  const filteredProducts = products.filter((product) => {
+    const categoryMatch = product.category_slug === slug;
+    if (activeSubCategory === 'all') {
+      return categoryMatch;
+    }
+    return categoryMatch && product.subCategory_slug === activeSubCategory;
+  });
+
   const catBanner = Banner.filter((banner) => banner.category_slug === slug);
-  if (catBanner.length === 0) {
-    return <div>No Catabnner found for this category.</div>;
-  }
-  if (categoryProducts.length === 0) {
-    return <div>No products found for this category.</div>;
-  }
 
   const handleAddToWishlist = (product) => {
     if (isLoggedIn) {
       const userId = getCurrentUserId();
       if (userId) {
         dispatch(
-          addWishlist  ({
+          addWishlist({
             userId,
             product: {
               id: product.id,
@@ -51,26 +61,28 @@ const CategoryPage = ({ params }) => {
             },
           })
         );
-
         setToast({ message: message, type: type });
-        // alert("Item added to the cart!");
       }
     } else {
-      setToast({ message: message, type: "error" });
-      // alert('Please sign in first');
+      setToast({ message: "Please sign in first", type: "error" });
     }
   };
+
   const closeToast = () => {
-    setToast({ message: "", type: "" }); // Close toast manually
+    setToast({ message: "", type: "" });
   };
-  // console.log(catBanner);
+
+  if (catBanner.length === 0 && filteredProducts.length === 0) {
+    return <div className="container mx-auto p-4 mt-16">No products found for this category.</div>;
+  }
+
   return (
-    <div className="container mx-auto p-4 mt-16 ">
+    <div className="container mx-auto p-4 mt-16">
       {catBanner.length > 0 && (
-        <div className="w-full mb-14 ">
+        <div className="w-full mb-8">
           <Image
-            src={catBanner[0].bannerImg} // Use the first banner image
-            alt={`Banner for ${slug}`} // Alt text should describe the category
+            src={catBanner[0].bannerImg}
+            alt={`Banner for ${slug}`}
             width={1440}
             height={120}
             priority={true}
@@ -78,30 +90,61 @@ const CategoryPage = ({ params }) => {
           />
         </div>
       )}
+
+      {/* Subcategory Filter */}
+      <div className="mb-8">
+        <div className="flex flex-wrap gap-4">
+          <button
+            onClick={() => setActiveSubCategory('all')}
+            className={`px-4 py-2 rounded-md transition-colors duration-300 ${
+              activeSubCategory === 'all'
+                ? 'bg-gray-800 text-white'
+                : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+            }`}
+          >
+            All Products
+          </button>
+          {subCategories.map((subCat) => (
+            <button
+              key={subCat.id}
+              onClick={() => setActiveSubCategory(subCat.slug)}
+              className={`px-4 py-2 rounded-md transition-colors duration-300 ${
+                activeSubCategory === subCat.slug
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+              }`}
+            >
+              {subCat.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Product Grid */}
-      <div className=" grid lg:grid-cols-4 md:grid-cols-3   gap-10 md:px-4 px-1  items-center">
-        {categoryProducts.map((product) => (
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-10 md:px-4 px-1 items-center">
+        {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className="relative n bg-white rounded-lg shadow-lg "
+            className="relative bg-white rounded-lg shadow-lg"
           >
             <div className="relative h-64 flex flex-col justify-center items-center">
-              <Image
-                src={product.thumbnail_image}
-                alt={product.title}
-                width={220}
-                height={220}
-                priority={true}
-                className=" cursor-pointer  hover:opacity-75 transition-transform duration-300 hover:scale-105"
-              />
-
+              <Link href={`/product/${product.slug}`} passHref>
+                <Image
+                  src={product.thumbnail_image}
+                  alt={product.title}
+                  width={220}
+                  height={220}
+                  priority={true}
+                  className="cursor-pointer hover:opacity-75 transition-transform duration-300 hover:scale-105"
+                />
+              </Link>
               <div className="absolute top-0 left-0 bg-red-500 text-white px-2 py-1 m-2 rounded-md text-sm font-bold">
                 {product.discount}% OFF
               </div>
 
               <button className="absolute top-0 right-0 m-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300">
                 <FaRegHeart
-                onClick={() => handleAddToWishlist(product)}
+                  onClick={() => handleAddToWishlist(product)}
                   className="w-6 h-6 text-gray-600 hover:text-red-500 transition-colors duration-300"
                 />
               </button>
@@ -124,13 +167,8 @@ const CategoryPage = ({ params }) => {
               </div>
 
               <div className="flex flex-col space-y-2">
-                {/* <button className="w-full px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-colors duration-300">
-                  Add to Cart
-                </button> */}
-
                 <Link
                   href={`/product/${product.slug}`}
-                  as={`/product/${product.slug}`}
                   passHref
                   legacyBehavior
                 >
@@ -144,26 +182,7 @@ const CategoryPage = ({ params }) => {
           </div>
         ))}
       </div>
-      {/* <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2  gap-5 justify-center items-center">
-        {categoryProducts.map((product) => (
-          <div key={product.id} className="border flex flex-col items-center rounded-lg bg-slate-100">
-            
-            <div className="image">
-              {product.thumbnail_image && (
-                <Image
-                  src={product.thumbnail_image}
-                  alt={product.title}
-                  width={220}
-                  height={320}
-                />
-              )}
-            </div>
-            <div>
-              <h3>{product.title}</h3>
-            </div>
-          </div>
-        ))}
-      </div> */}
+
       {toast.message && (
         <Toast message={toast.message} type={toast.type} onClose={closeToast} />
       )}

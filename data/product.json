@@ -1,13 +1,15 @@
 [
   {
-    "id": "p1",
-    "title": "Wireless Bluetooth Headphones",
+    "id": "p1" , 
+     "title": "Wireless Bluetooth Headphones",
     "slug": "wireless-bluetooth-headphones",
     "sku": "WB121",
+    
     "price": 69.99,
     "offer_price": 59.99,
     "discount": 14.29,
     "category_slug": "electronics",
+    "subCategory_slug":"headphones",
     "isBestSeller":false,
     "isFeature":false,
     "short_description": "Noise-cancelling wireless Bluetooth headphones with 30 hours of battery life.",
@@ -34,7 +36,7 @@
     }
   },
   {
-    "id": "p2",
+    "id": "p2" ,  
     "title": "Smartphone Pro Max 256GB",
     "slug": "smartphone-pro-max-256gb",
     "sku": "MB100",
@@ -42,6 +44,7 @@
     "offer_price": 899.99,
     "discount": 10.00,
     "category_slug": "electronics",
+    "subCategory_slug":"mobile-phones",
     "isBestSeller":true,
     "isFeature":false,
     "short_description": "Latest Smartphone with 256GB Storage, 12MP camera, and 5G support.",
@@ -69,7 +72,7 @@
     }
   },
   {
-    "id": "p3",
+    "id": "p3" ,  
     "title": "4K Ultra HD LED TV",
     "slug": "4k-ultra-hd-led-tv",
     "sku": "TV199",
@@ -77,6 +80,7 @@
     "offer_price": 399.99,
     "discount": 20.00,
     "category_slug": "electronics",
+    "subCategory_slug":"home-appliances",
     "isBestSeller":false,
     "isFeature":false,
     "short_description": "55-inch 4K UHD Smart TV with HDR.",
@@ -103,7 +107,7 @@
     }
   },
   {
-    "id": "p4",
+    "id": "p4" ,  
     "title": "Smart Watch Series 6",
     "slug": "smart-watch-series-6",
     "sku": "SW110",
@@ -111,6 +115,7 @@
     "offer_price": 159.99,
     "discount": 20.00,
     "category_slug": "electronics",
+    "subCategory_slug":"home-appliances",
     "isBestSeller":false,
     "isFeature":false,
     "short_description": "Smartwatch with heart rate monitor and GPS.",
@@ -136,7 +141,7 @@
     }
   },
   {
-    "id": "p5",
+    "id": "p5" ,  
     "title": "Men's Leather Jacket",
     "slug": "mens-leather-jacket",
     "sku": "FC151",
@@ -144,6 +149,7 @@
     "offer_price": 109.99,
     "discount": 15.38,
     "category_slug": "fashion",
+    "subCategory_slug":"mens",
     "isBestSeller":true,
     "isFeature":false,
     "short_description": "Premium leather jacket for men with vintage finish.",
@@ -168,14 +174,15 @@
     }
   },
   {
-    "id": "p6",
-    "title": "Women's Woolen Coat",
+    "id": "p6" , 
+     "title": "Women's Woolen Coat",
     "slug": "womens-woolen-coat",
     "sku": "FC111",
     "price": 89.99,
     "offer_price": 79.99,
     "discount": 11.11,
     "category_slug": "fashion",
+    "subCategory_slug":"womens",
     "isBestSeller":true,
     "isFeature":false,
     "short_description": "Cozy and stylish woolen coat for women.",
@@ -200,14 +207,15 @@
     }
   },
   {
-    "id": "p7",
-    "title": "Casual Sneakers",
+    "id": "p7" , 
+     "title": "Casual Sneakers",
     "slug": "casual-sneakers",
     "sku": "SH151",
     "price": 49.99,
     "offer_price": 39.99,
     "discount": 20.00,
     "category_slug": "fashion",
+    "subCategory_slug":"mens",
     "isBestSeller":false,
     "isFeature":false,
     "short_description": "Comfortable sneakers for casual wear.",
@@ -231,14 +239,15 @@
     }
   },
   {
-    "id": "p8",
-    "title": "Women's Sunglasses",
+    "id": "p8" , 
+     "title": "Women's Sunglasses",
     "slug": "womens-sunglasses",
     "sku": "WB121",
     "price": 29.99,
     "offer_price": 24.99,
     "discount": 16.67,
     "category_slug": "fashion",
+    "subCategory_slug":"womens",
     "isBestSeller":false,
     "isFeature":true,
     "short_description": "Trendy sunglasses for women.",
@@ -262,7 +271,7 @@
     }
   },
   {
-    "id": "p9",
+    "id": "p9" ,  
     "title": "Microwave Oven",
     "slug": "microwave-oven",
     "sku": "MO140",
@@ -271,7 +280,8 @@
     "discount": 7.14,
     "isBestSeller":false,
     "isFeature":false,
-    "category_slug": "home-appliances",
+    "category_slug": "electonics",
+    "subCategory_slug":"home-appliances",
     "short_description": "Compact microwave oven for everyday use.",
     "thumbnail_image": "/img/oven1.webp",
     "gallery_images": [
@@ -293,14 +303,15 @@
     }
   },
   {
-    "id": "p10",
+    "id": "p10" , 
     "title": "Blender 800W",
     "slug": "blender-800w",
     "sku": "BL110",
     "price": 49.99,
     "offer_price": 39.99,
     "discount": 20.00,
-    "category_slug": "home-appliances",
+    "category_slug": "electronics",
+    "subCategory_slug":"home-appliances",
     "isBestSeller":false,
     "isFeature":false,
     "short_description": "800W high-speed blender for smoothies and more.",
@@ -324,14 +335,15 @@
     }
   },
   {
-    "id": "p11",
+    "id": "p11" , 
     "title": "Cordless Vacuum Cleaner",
     "slug": "cordless-vacuum-cleaner",
     "sku": "VC120",
     "price": 89.99,
     "offer_price": 79.99,
     "discount": 11.11,
-    "category_slug": "home-appliances",
+    "category_slug": "electronics",
+    "subCategory_slug":"home-appliances",
     "isBestSeller":false,
     "isFeature":true,
     "short_description": "LightWeight cordless vacuum cleaner.",
@@ -356,7 +368,7 @@
     }
   },
   {
-    "id": "p12",
+    "id": "p12" ,
     "title": "Air Purifier 3-in-1",
     "slug": "air-purifier-3-in-1",
     "sku": "AP130",
@@ -365,7 +377,8 @@
     "discount": 11.11,
     "isBestSeller":false,
     "isFeature":false,
-    "category_slug": "home-appliances",
+    "category_slug": "electronics",
+    "subCategory_slug":"home-appliances",
     "short_description": "Air purifier with HEPA filter for clean indoor air.",
     "thumbnail_image": "/img/purifier.webp",
     "gallery_images": [
@@ -387,14 +400,15 @@
     }
   },
   {
-    "id": "p13",
-    "title": "The Great Gatsby",
+    "id": "p13" ,
+     "title": "The Great Gatsby",
     "slug": "the-great-gatsby",
     "sku": "BG100",
     "price": 9.99,
     "offer_price": 7.99,
     "discount": 20.02,
     "category_slug": "books",
+    "subCategory_slug":"magical",
     "isBestSeller":false,
     "isFeature":false,
     "short_description": "A classic novel by F. Scott Fitzgerald.",
@@ -417,7 +431,7 @@
     }
   },
   {
-    "id": "p14",
+    "id": "p14" , 
     "title": "To Kill a Mockingbird",
     "slug": "to-kill-a-mockingbird",
     "sku": "TKM105",
@@ -425,6 +439,7 @@
     "offer_price": 10.99,
     "discount": 15.41,
     "category_slug": "books",
+    "subCategory_slug":"magical",
     "isBestSeller":false,
     "isFeature":false,
     "short_description": "Pulitzer Prize-winning novel by Harper Lee.",
@@ -447,14 +462,15 @@
     }
   },
   {
-    "id": "p15",
-    "title": "1984 by George Orwell",
+    "id": "p15" ,
+     "title": "1984 by George Orwell",
     "slug": "1984-by-george-orwell",
     "sku": "1984GEO",
     "price": 8.99,
     "offer_price": 6.99,
     "discount": 22.24,
     "category_slug": "books",
+    "subCategory_slug":"thriller",
     "isBestSeller":true,
     "isFeature":true,
     "short_description": "Dystopian novel set in a totalitarian regime.",
@@ -477,9 +493,9 @@
     }
   },
   {
-    "id": "p16",
-    "title": "Pride and Prejudice",
-    "slug": "pride-and-prejudice",
+    "id": "p16" ,
+     "title": "Pride and Pr ejudice",
+    "slug": "pride-and-pr ejudice",
     "sku": "PP101",
     "price": 7.99,
     "offer_price": 5.99,
@@ -487,11 +503,12 @@
     "isBestSeller":false,
     "isFeature":false,
     "category_slug": "books",
+    "subCategory_slug":"thriller",
     "short_description": "A classic romance novel by Jane Austen.",
-    "thumbnail_image": "/images/pride-prejudice-thumbnail.jpg",
+    "thumbnail_image": "/images/pride-prejud ice-thumbnail.jpg",
     "gallery_images": [
-      "/images/pride-prejudice-1.jpg",
-      "/images/pride-prejudice-2.jpg"
+      "/images/pride-prejud ice-1.jpg",
+      "/images/pride-prejud ice-2.jpg"
     ],
     "features": [
       "Classic romance",
@@ -507,14 +524,15 @@
     }
   },
   {
-    "id": "p17",
-    "title": "The Catcher in the Rye",
+    "id": "p17" ,
+     "title": "The Catcher in the Rye",
     "slug": "the-catcher-in-the-rye",
     "sku": "CITR112",
     "price": 11.99,
     "offer_price": 9.99,
     "discount": 16.67,
     "category_slug": "books",
+    "subCategory_slug":"sci-fi",
     "isBestSeller":false,
     "isFeature":false,
     "short_description": "A novel by J.D. Salinger about a disillusioned teenager.",
@@ -537,7 +555,7 @@
     }
   },
   {
-    "id": "p18",
+    "id": "p18" , 
     "title": "Moby Dick",
     "slug": "moby-dick",
     "sku": "MD120",
@@ -547,6 +565,7 @@
     "isBestSeller":false,
     "isFeature":true,
     "category_slug": "books",
+    "subCategory_slug":"sci-fi",
     "short_description": "The epic tale of Captain Ahab and his hunt for the white whale.",
     "thumbnail_image": "/images/moby-dick-thumbnail.jpg",
     "gallery_images": [
@@ -567,7 +586,7 @@
     }
   },
   {
-    "id": "p19",
+    "id": "p19" , 
     "title": "War and Peace",
     "slug": "war-and-peace",
     "sku": "WP121",
@@ -575,6 +594,7 @@
     "offer_price": 16.99,
     "discount": 15.00,
     "category_slug": "books",
+    "subCategory_slug":"thriller",
     "isBestSeller":false,
     "isFeature":true,
     "short_description": "Leo Tolstoy's historical epic set during the Napoleonic wars.",
@@ -597,14 +617,15 @@
     }
   },
   {
-    "id": "p20",
+    "id": "p20" , 
     "title": "Brave New World",
     "slug": "brave-new-world",
-    "sku": "BNW130",
+    "sku": "BNW13",
     "price": 13.99,
     "offer_price": 11.99,
     "discount": 14.29,
     "category_slug": "books",
+    "subCategory_slug":"magical",
     "isBestSeller":false,
     "isFeature":false,
     "short_description": "A dystopian novel by Aldous Huxley about a future society.",
@@ -627,10 +648,10 @@
     }
   },
   {
-    "id": "p21",
-    "title": "Mivi DuoPods i7 Earbuds",
+    "id": "p21" ,
+     "title": "Mivi DuoPods i7 Earbuds",
     "slug": "mivi-duoPods-i7-earbuds",
-    "sku": "MICI220",
+    "sku": "MICI2",
     "price": 30.99,
     "offer_price": 25,
     "discount": 10,
@@ -661,14 +682,15 @@
     }
   },
   {
-    "id": "p22",
-    "title": "ASUS Vivobook Go 15 (2023)",
+    "id": "p22" ,
+     "title": "ASUS Vivobook Go 15 (2023)",
     "slug": "asus-vivobook-go-15",
-    "sku": "MICI220",
+    "sku": "MICI2",
     "price": 30.99,
     "offer_price": 25,
     "discount": 10,
     "category_slug": "electronics",
+    "subCategory_slug":"laptops",
     "isBestSeller":true,
     "isFeature":true,
     "short_description": "3D Soundstage: Experience the 3rd dimension of sound with the sound flowing seamlessly, effusing a true depth audio spectacle. Hear every instrument in a song clearly and distinctly. The 3rd dimensional aspect of the soundstage makes it immersive thus offering a surreal audio experience.",
@@ -682,7 +704,7 @@
       "Memory: 16GB DDR5 on board with| Storage: 512GB M.2 NVMe PCIe 3.0 SSD",
       "Display: 15.6-inch (39.624cm), FHD (1920 x 1080) 16:9 aspect ratio, 60Hz refresh rate, LED Backlit, 250nits, 45% NTSC color gamut, Anti-glare display",
       "Integrated: AMD Radeon Graphics",
-      "Operating System: Windows 11 Home with lifetime validity | Software Included: Pre-Installed Office Home and Student 2021 | 1-Year McAfee Anti-Virus"
+      "Operating System: Windows 11 Home with lifetime validity | So ftware Included: Pre-Installed Office Home and Student 2021 | 1-Year McAfee Anti-Virus"
     ],
     "specifications": {
       "Brand": "Asus",
@@ -696,7 +718,7 @@
       "Series": "Vivobook Go 15 (2023)"
     }
   },{
-    "id": "p23",
+    "id": "p23" ,
     "title": "Mens Cotton Regular Fit Sky Blue Colour Shirt Urban Light",
     "slug": "mens-cotton-regular-fit",
     "sku": "FAS21",
@@ -704,6 +726,7 @@
     "offer_price": 100.99,
     "discount": 10.38,
     "category_slug": "fashion",
+    "subCategory_slug":"mens",
     "isBestSeller":false,
     "isFeature":true,
     "short_description": "Premium leather jacket for men with vintage finish.",
@@ -728,7 +751,7 @@
     }
   },
   {
-    "id": "p24",
+    "id": "p24"  ,
     "title": "Gaming Laptop 16GB RAM",
     "slug": "gaming-laptop-16gb-ram",
     "sku": "GL310",
@@ -736,6 +759,7 @@
     "offer_price": 999.99,
     "discount": 16.67,
     "category_slug": "electronics",
+    "subCategory_slug":"laptops",
     "isBestSeller": true,
     "isFeature": true,
     "short_description": "High-performance gaming laptop with 16GB RAM and RTX graphics.",
@@ -761,7 +785,7 @@
     }
   },
   {
-    "id": "p25",
+    "id": "p25" , 
     "title": "Men's Casual Sneakers",
     "slug": "mens-casual-sneakers",
     "sku": "FC200",
@@ -769,10 +793,11 @@
     "offer_price": 69.99,
     "discount": 12.50,
     "category_slug": "fashion",
+    "subCategory_slug":"mens",
     "isBestSeller": false,
     "isFeature": false,
     "short_description": "Comfortable and stylish sneakers for everyday wear.",
-    "thumbnail_image": "/img/sneakers1.webp",
+    "thumbnail_image": "/img/sneakers2.png",
     "gallery_images": [
       "/img/sneakers2.webp",
       "/img/sneakers3.webp"
@@ -792,21 +817,22 @@
     }
   },
   {
-    "id": "p26",
+    "id": "p26" ,
     "title": "Smart Refrigerator",
     "slug": "smart-refrigerator",
     "sku": "HA001",
     "price": 1499.99,
     "offer_price": 1399.99,
     "discount": 6.67,
-    "category_slug": "home-appliances",
+    "category_slug": "electronics",
+    "subCategory_slug":"home-appliances",
     "isBestSeller": true,
     "isFeature": false,
     "short_description": "Smart refrigerator with Wi-Fi and touch control panel.",
-    "thumbnail_image": "/img/smart-fridge.jpg",
+    "thumbnail_image": "/img/smart-fridge.jpg", 
     "gallery_images": [
-      "/img/fridge2.webp",
-      "/img/fridge3.webp"
+      "/img/fridge2.webp ",
+      "/img/fridge3.webp "
     ],
     "features": [
       "Wi-Fi connectivity",
@@ -823,7 +849,7 @@
     }
   },
   {
-    "id": "p27",
+    "id": "p27" ,
     "title": "4K Ultra HD Projector",
     "slug": "4k-ultra-hd-projector",
     "sku": "PR200",
@@ -831,6 +857,7 @@
     "offer_price": 349.99,
     "discount": 12.50,
     "category_slug": "electronics",
+    "subCategory_slug":"home-appliances",
     "isBestSeller": false,
     "isFeature": false,
     "short_description": "Portable 4K Ultra HD projector for home theater experience.",
@@ -854,7 +881,7 @@
     }
   },
   {
-    "id": "p28",
+    "id": "p28" , 
     "title": "Women's Classic Handbag",
     "slug": "womens-classic-handbag",
     "sku": "FH110",
@@ -862,10 +889,11 @@
     "offer_price": 49.99,
     "discount": 16.67,
     "category_slug": "fashion",
+    "subCategory_slug":"womens",
     "isBestSeller": true,
     "isFeature": false,
     "short_description": "Elegant leather handbag for women with ample storage.",
-    "thumbnail_image": "/img/handbag1.webp",
+    "thumbnail_image": "/img/hand-bag.jpg",
     "gallery_images": [
       "/img/handbag2.webp",
       "/img/handbag3.webp"
@@ -885,14 +913,15 @@
     }
   },
   {
-    "id": "p29",
+    "id": "p29" ,
     "title": "Air Fryer",
     "slug": "air-fryer",
     "sku": "HA210",
     "price": 129.99,
     "offer_price": 109.99,
     "discount": 15.39,
-    "category_slug": "home-appliances",
+    "category_slug": "electronics",
+    "subCategory_slug":"home-appliances",
     "isBestSeller": false,
     "isFeature": true,
     "short_description": "Compact air fryer with adjustable temperature control.",
@@ -902,7 +931,7 @@
       "/img/airfryer3.webp"
     ],
     "features": [
-      "Rapid air circulation",
+      "Rapid air cir culation",
       "Adjustable temperature",
       "Non-stick basket",
       "Dishwasher safe parts"
@@ -916,7 +945,7 @@
     }
   },
   {
-    "id": "p30",
+    "id": "p30" , 
     "title": "Men's Leather Wallet",
     "slug": "mens-leather-wallet",
     "sku": "FW305",
@@ -924,17 +953,18 @@
     "offer_price": 24.99,
     "discount": 16.67,
     "category_slug": "fashion",
+    "subCategory_slug":"mens",
     "isBestSeller": false,
     "isFeature": false,
     "short_description": "Classic leather wallet with multiple compartments.",
-    "thumbnail_image": "/img/wallet1.webp",
+    "thumbnail_image": "/img/wallet.jpg",
     "gallery_images": [
       "/img/wallet2.webp",
       "/img/wallet3.webp"
     ],
     "features": [
       "Premium leather",
-      "RFID blocking",
+      "RFID blockin g",
       "Multiple card slots",
       "Compact design"
     ],
@@ -947,7 +977,7 @@
     }
   },
   {
-    "id": "p31",
+    "id": "p31" , 
     "title": "Men's Athletic Sneakers",
     "slug": "mens-athletic-sneakers",
     "sku": "FAS100",
@@ -955,10 +985,11 @@
     "offer_price": 65.99,
     "discount": 13.16,
     "category_slug": "fashion",
+    "subCategory_slug":"mens",
     "isBestSeller": true,
     "isFeature": false,
-    "short_description": "Durable and comfortable sneakers ideal for athletic use.",
-    "thumbnail_image": "/img/athletic-sneakers.webp",
+    "short_description": "Durable and comfortable sneakers ideal for  athletic use.",
+    "thumbnail_image": "/img/sneakers3.jpg",
     "gallery_images": [
       "/img/sneakers-detail-1.webp",
       "/img/sneakers-detail-2.webp"
@@ -978,7 +1009,7 @@
     }
   },
   {
-    "id": "p32",
+    "id": "p32" , 
     "title": "Bluetooth Home Speaker",
     "slug": "bluetooth-home-speaker",
     "sku": "BHS300",
@@ -986,6 +1017,7 @@
     "offer_price": 79.99,
     "discount": 20.00,
     "category_slug": "electronics",
+    "subCategory_slug":"headphones",
     "isBestSeller": false,
     "isFeature": false,
     "short_description": "High-quality sound with deep bass Bluetooth home speaker.",

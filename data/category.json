@@ -2,22 +2,100 @@
     {
       "id": "c1",
       "name": "Electronics",
-      "slug": "electronics"
+      "slug": "electronics",
+      "subCat":[
+        {
+          "id":"s1",
+          "name": "Mobile Phones",
+          "slug": "mobile-phones"
+        },
+        {
+          "id":"s2",
+          "name": "Home Appliances",
+          "slug": "home-appliances"
+        },
+        {
+          "id":"s3",
+          "name": "Laptops",
+          "slug": "laptops"
+        },
+        {
+          "id":"s20",
+          "name": "Headphones",
+          "slug": "headphones"
+        }
+
+      ]
     },
     {
       "id": "c2",
       "name": "Fashion",
-      "slug": "fashion"
+      "slug": "fashion",
+      "subCat":[
+        {
+          "id":"s4",
+          "name": "Mens",
+          "slug": "mens"
+        },
+        {
+          "id":"s5",
+          "name": "Womans",
+          "slug": "womens"
+        },
+        {
+          "id":"s6",
+          "name": "Kids",
+          "slug": "kids"
+        }
+
+      ]
     },
     {
       "id": "c3",
-      "name": "Home Appliances",
-      "slug": "home-appliances"
+      "name": "Furniture",
+      "slug": "furniture",
+      "subCat":[
+        {
+          "id":"s10",
+          "name": "Beds",
+          "slug": "beds"
+        },
+        {
+          "id":"s11",
+          "name": "Chair and Tables",
+          "slug": "chair-and-table"
+        },
+        {
+          "id":"s12",
+          "name": "Sofa",
+          "slug": "sofa"
+        }
+
+      ]
+      
     },
     {
       "id": "c4",
       "name": "Books",
-      "slug": "books"
+      "slug": "books",
+      "subCat":[
+        {
+          "id":"s7",
+          "name": "Magical",
+          "slug": "magical"
+        },
+        {
+          "id":"s8",
+          "name": "Thriller",
+          "slug": "thriller"
+        },
+        {
+          "id":"s9",
+          "name": "Sci-Fi",
+          "slug": "sic-fi"
+        }
+
+      ]
     }
   ]
   
