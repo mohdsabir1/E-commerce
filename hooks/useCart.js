@@ -1,10 +1,18 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-// import { getCurrentUserId, loadUserCart } from '../utils/cartUtils';
 import { setUserCart } from '@/redux/cartSlice';
-import { getCurrentUserId, loadUserCart ,loadUserWishlist} from '@/utlis/cartUtlis';
 import { setWishlist } from '@/redux/wishlistSlice';
+// import { setCheckout } from '@/redux/checkoutSlice';
+
+
+import { getCurrentUserId, loadUserCart, loadUserWishlist, loadChecklist, loadProfile} from '@/utlis/cartUtlis';
+import { setCheckutItems } from '@/redux/checkoutSlice';
+import { setProfile } from '@/redux/profileSlice';
+
+
+// import { getCurrentUserId, loadUserCart, loadUserWishlist, loadChecklist, loadProfile } from '@/utils/cartUtlis'; // Updated import
+
+// useCart hook
 export const useCart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
@@ -12,13 +20,19 @@ export const useCart = () => {
   useEffect(() => {
     const userId = getCurrentUserId();
     if (userId) {
-      const userCart = loadUserCart(userId);
-      dispatch(setUserCart({ userId, items: userCart }));
+      try {
+        const userCart = loadUserCart(userId);
+        dispatch(setUserCart({ userId, items: userCart }));
+      } catch (error) {
+        console.error("Error loading user cart:", error);
+      }
     }
   }, [dispatch]);
 
   return cart;
 };
+
+// useWishlist hook
 export const useWishlist = () => {
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist);
@@ -26,10 +40,57 @@ export const useWishlist = () => {
   useEffect(() => {
     const userId = getCurrentUserId();
     if (userId) {
-      const userWishlist = loadUserWishlist(userId);
-      dispatch(setWishlist({ userId, items: userWishlist }));
+      try {
+        const userWishlist = loadUserWishlist(userId);
+        dispatch(setWishlist({ userId, items: userWishlist }));
+      } catch (error) {
+        console.error("Error loading user wishlist:", error);
+      }
     }
   }, [dispatch]);
 
   return wishlist;
 };
+// useProfile hook
+export const useProfile = () => {
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.profile);
+
+  useEffect(() => {
+    const userId = getCurrentUserId();
+    if (userId) {
+      try {
+        const userProfile = loadProfile(userId);
+        dispatch(setProfile({ userId, items: userProfile }));
+      } catch (error) {
+        console.error("Error loading user profile:", error);
+       
+      }
+    }
+  }, [dispatch]);
+
+  return profile;
+};
+
+// useCheckout hook
+export const useCheckout = () => {
+  const dispatch = useDispatch();
+  const checkout = useSelector((state) => state.checkout);
+
+  useEffect(() => {
+    const userId = getCurrentUserId();
+    if (userId) {
+      try {
+        const userChecklist = loadChecklist(userId);
+        dispatch(setCheckutItems({ userId, items: userChecklist }));
+      } catch (error) {
+        console.error("Error loading user checklist:", error);
+      }
+    }
+  }, [dispatch]);
+
+  return checkout;
+};
+
+
+

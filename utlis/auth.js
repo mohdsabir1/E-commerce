@@ -30,7 +30,7 @@ export const login = (email, password) => {
 
   if (user) {
     localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('currentUser', JSON.stringify({ username: user.username }));
+    localStorage.setItem('currentUser', JSON.stringify({ username: user.username , email: user.email}));
     window.location.href = '/';
     return { success: true, message: 'Login successful' };
   } else {

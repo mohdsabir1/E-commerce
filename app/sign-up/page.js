@@ -5,7 +5,9 @@ import Link from "next/link";
 import { LuEyeOff, LuEye } from "react-icons/lu";
 import { signUp } from "@/utlis/auth";
 import { Toast } from "../components/Toast";
+import { useRouter } from "next/navigation";
 export default function SignUp() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -17,6 +19,7 @@ export default function SignUp() {
     e.preventDefault();
     const result = signUp(username, email, password);
     if (result.success) {
+        router.push('/login')
       setToast({ message: result.message, type: "success" });
       setEmail('');
       setPassword('');
