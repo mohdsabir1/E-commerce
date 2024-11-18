@@ -1,130 +1,168 @@
-"use client";
-import { getCurrentUserId } from "@/utlis/cartUtlis";
-import { useSelector, useDispatch } from "react-redux";
-import { Toast } from "../components/Toast";
-import { useCart } from "@/hooks/useCart";
-import Image from "next/image";
-import { useState, useEffect } from "react";
-import { removeFromCart, updateQuantity } from "@/redux/cartSlice";
-import CheckoutForm from "../components/ProfileForm";
+'use client'
+
+import { getCurrentUserId } from "@/utlis/cartUtlis"
+import { useSelector, useDispatch } from "react-redux"
+import { Toast } from "../components/Toast"
+import { useCart, useProfile } from "@/hooks/useCart"
+import Image from "next/image"
+import { useState, useEffect } from "react"
+import { removeFromCart, updateQuantity } from "@/redux/cartSlice"
 
 export default function CartPage() {
-  const dispatch = useDispatch();
-  const userId = getCurrentUserId();
-  useCart(userId);
+  const dispatch = useDispatch()
+  const userId = getCurrentUserId()
+  useCart(userId)
+  useProfile(userId)
 
-  const { message, type } = useSelector((state) => state.cart);
-  const [toast, setToast] = useState({ message: "", type: "" });
-  const cartItems = useSelector((state) => state.cart.items[userId] || []);
+  const { message, type } = useSelector((state) => state.cart)
+  const [toast, setToast] = useState({ message: "", type: "" })
+  const cartItems = useSelector((state) => state.cart.items[userId] || [])
+  const profileData = useSelector((state) => state.profile.items[userId] || [])
 
   const handleUpdateQuantity = (productId, newQuantity) => {
     if (newQuantity > 0) {
-      dispatch(updateQuantity({ userId, productId, quantity: newQuantity }));
+      dispatch(updateQuantity({ userId, productId, quantity: newQuantity }))
     }
-  };
+  }
 
   const handleRemoveItem = (productId) => {
-    dispatch(removeFromCart({ userId, productId }));
+    dispatch(removeFromCart({ userId, productId }))
     setToast({
       message: "Item removed successfully",
       type: "success",
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     if (message && type) {
-      // Set the toast message and type from Redux
-      setToast({ message, type });
-
-      // Automatically close the toast after 3 seconds
+      setToast({ message, type })
       const toastTimer = setTimeout(() => {
-        setToast({ message: "", type: "" }); // Clear toast after a delay
-      }, 3000);
-
-      // Cleanup the timer when the component unmounts or the message changes
-      return () => clearTimeout(toastTimer);
+        setToast({ message: "", type: "" })
+      }, 3000)
+      return () => clearTimeout(toastTimer)
     }
-  }, [message, type]);
+  }, [message, type])
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
-  );
+  )
 
   const closeToast = () => {
-    setToast({ message: "", type: "" }); // Close toast manually
-  };
+    setToast({ message: "", type: "" })
+  }
+
+  if (profileData.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"></div>
+        <span className="ml-2 text-lg">Loading profile data...</span>
+      </div>
+    )
+  }
+
+  const { name, phone, address1, address2, landmark, city, state, pincode } = profileData[0]
 
   return (
     <div className="container mx-auto p-4 mt-24">
       {cartItems.length === 0 ? (
-        <p>Your cart is empty</p>
+        <div className="text-center p-8 bg-white shadow-md rounded-lg">
+          <p className="text-2xl font-semibold text-gray-600">Your cart is empty</p>
+          <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+            Continue Shopping
+          </button>
+        </div>
       ) : (
-        <>
-          <div className="md:w-1/2 flex justify-between items-center mb-4">
-            <h1 className="text-lg md:text-2xl font-bold ">Shopping Cart</h1>
-            <div className="text-lg md:text-xl font-bold">
-              Total: ${total.toFixed(2)}
-            </div>
-          </div>
-          <div className="md:grid md:grid-cols-12 gap-10">
-            <div className="col-span-6">
-              <div className="space-y-4">
-                {cartItems.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between border-b pb-4">
-                    <div className="flex items-center space-x-4">
-                      <Image
-                        src={item.thumbnail_image}
-                        alt={item.title}
-                        width={80}
-                        height={80}
-                        className="object-cover"
-                      />
-                      <div>
-                        <h3 className="font-medium">{item.title}</h3>
-                        <p className="text-gray-600">${item.price}</p>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div className="md:col-span-8">
+            <div className="bg-white shadow-md rounded-lg overflow-hidden">
+              <div className="p-4 border-b flex justify-between items-center">
+                <h2 className="text-2xl font-bold">Shopping Cart</h2>
+                <div className="text-xl font-bold">Total: ${total.toFixed(2)}</div>
+              </div>
+              <div className="p-4">
+                <div className="space-y-6">
+                  {cartItems.map((item) => (
+                    <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 p-4 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-4">
+                        <Image
+                          src={item.thumbnail_image}
+                          alt={item.title}
+                          width={80}
+                          height={80}
+                          className="object-cover rounded-md"
+                        />
+                        <div>
+                          <h3 className="font-medium text-lg">{item.title}</h3>
+                          <p className="text-gray-600">${item.price}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2">
+                          <button
+                            className="px-2 py-1 border rounded hover:bg-gray-200 transition-colors"
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                            aria-label="Decrease quantity"
+                          >
+                            -
+                          </button>
+                          <span className="w-8 text-center">{item.quantity}</span>
+                          <button
+                            className="px-2 py-1 border rounded hover:bg-gray-200 transition-colors"
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                            aria-label="Increase quantity"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <button
+                          className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                          onClick={() => handleRemoveItem(item.id)}
+                          aria-label="Remove item"
+                        >
+                          Remove
+                        </button>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-2">
-                        <button
-                          onClick={() =>
-                            handleUpdateQuantity(item.id, item.quantity - 1)
-                          }
-                          className="px-2 py-1 border rounded"
-                        >
-                          -
-                        </button>
-                        <span>{item.quantity}</span>
-                        <button
-                          onClick={() =>
-                            handleUpdateQuantity(item.id, item.quantity + 1)
-                          }
-                          className="px-2 py-1 border rounded"
-                        >
-                          +
-                        </button>
-                      </div>
-                      <button
-                        onClick={() => handleRemoveItem(item.id)}
-                        className="text-red-500"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-            <div className="col-span-6">
-             
+          </div>
+
+          <div className="md:col-span-4">
+            <div className="bg-white shadow-md rounded-lg overflow-hidden">
+              <div className="p-4 border-b">
+                <h2 className="text-xl font-bold">Delivery Address</h2>
+              </div>
+              <div className="p-4">
+                <div className="space-y-2">
+                  <p><span className="font-semibold">Name:</span> {name}</p>
+                  <p><span className="font-semibold">Phone:</span> {phone}</p>
+                  <p><span className="font-semibold">Address:</span> {address1}</p>
+                  {address2 && <p>{address2}</p>}
+                  {landmark && <p><span className="font-semibold">Landmark:</span> {landmark}</p>}
+                  <p><span className="font-semibold">City:</span> {city}</p>
+                  <p><span className="font-semibold">State:</span> {state}</p>
+                  <p><span className="font-semibold">Pincode:</span> {pincode}</p>
+                </div>
+                <div className="mt-4 pt-4 border-t">
+                  <div className="flex justify-between items-center font-bold text-lg">
+                    <span>Total:</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                  <button className="w-full mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors">
+                    Proceed to Checkout
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </>
+        </div>
       )}
       {toast.message && (
         <Toast message={toast.message} type={toast.type} onClose={closeToast} />
       )}
     </div>
-  );
+  )
 }

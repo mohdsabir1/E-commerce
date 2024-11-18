@@ -13,6 +13,8 @@ export default function CheckoutForm() {
   // Fetch profile data using custom hook
   useProfile(userId);
 
+  const [formErrors, setFormErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
   // Access profile data from the Redux store
   const profileData = useSelector((state) => state.profile.items[userId] || []);
 
