@@ -5,7 +5,7 @@ import ProductCard from './ProductCard';
 export default function BestSeller() {
    
 const bestSellers = products.filter(product => product.isBestSeller);
-console.log("Best Seller", bestSellers)
+// console.log("Best Seller", bestSellers)
 
   return (
     <div>

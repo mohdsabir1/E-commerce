@@ -33,9 +33,9 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-100 py-24 px-4 sm:px-6 lg:px-8 ">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-center text-gray-900 mb-12">Your Profile</h1>
+        {/* <h1 className="text-4xl font-bold text-center text-gray-900 mb-12">Your Profile</h1> */}
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">
           <div className="md:flex">
             <div className="md:w-1/3">
