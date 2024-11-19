@@ -7,7 +7,9 @@ import Image from "next/image";
 import { MdCancel } from "react-icons/md";
 import { removeFromWishlist } from "@/redux/wishlistSlice";
 import { Toast } from "../components/Toast";
+import { useRouter } from "next/navigation";
 export default function Wishlist() {
+  const router = useRouter(); // For navigation
   const dispatch = useDispatch();
   const userId = getCurrentUserId();
   useWishlist(userId);
@@ -15,6 +17,21 @@ export default function Wishlist() {
   const wishlistItems = useSelector(
     (state) => state.wishlist.items[userId] || []
   );
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [currentUser, setCurrentUser] = useState({ username: '', email: '' })
+  const [isLoading, setIsLoading] = useState(true); // For managing loading state
+  useEffect(() => {
+    const loginStatus = localStorage.getItem('isLoggedIn');
+    if (loginStatus === 'true') {
+      setIsLoggedIn(true);
+      const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      setCurrentUser(user);
+    } else {
+      router.push('/'); // Redirect to login if not logged in
+    }
+    setIsLoading(false); // Set loading to false after check
+  }, [router]);
+
 
   const handleRemoveItem = (productId) => {
     dispatch(removeFromWishlist({ userId, productId }));

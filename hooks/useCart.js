@@ -6,8 +6,9 @@ import { setWishlist } from '@/redux/wishlistSlice';
 
 
 import { getCurrentUserId, loadUserCart, loadUserWishlist, loadChecklist, loadProfile} from '@/utlis/cartUtlis';
-import { setCheckutItems } from '@/redux/checkoutSlice';
+
 import { setProfile } from '@/redux/profileSlice';
+import { setCheckutItems } from '@/redux/checkoutSlice';
 
 
 // import { getCurrentUserId, loadUserCart, loadUserWishlist, loadChecklist, loadProfile } from '@/utils/cartUtlis'; // Updated import
@@ -71,9 +72,7 @@ export const useProfile = () => {
 
   return profile;
 };
-
-// useCheckout hook
-export const useCheckout = () => {
+export const checkout = () => {
   const dispatch = useDispatch();
   const checkout = useSelector((state) => state.checkout);
 
@@ -81,16 +80,21 @@ export const useCheckout = () => {
     const userId = getCurrentUserId();
     if (userId) {
       try {
-        const userChecklist = loadChecklist(userId);
-        dispatch(setCheckutItems({ userId, items: userChecklist }));
+        const userCheckout = loadChecklist(userId);
+        dispatch(setCheckutItems({ userId, items: userCheckout }));
       } catch (error) {
-        console.error("Error loading user checklist:", error);
+        console.error("Error loading user userCheckout:", error);
+       
       }
     }
   }, [dispatch]);
 
   return checkout;
 };
+
+// useCheckout hook
+// useCheckout hook
+
 
 
 

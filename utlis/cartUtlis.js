@@ -18,7 +18,7 @@ export const loadUserWishlist = (userId) => {
 };
 
 export const loadChecklist = (userId) => {
-  const checklistData = localStorage.getItem(`checklist_${userId}`);
+  const checklistData = localStorage.getItem(`checkout_${userId}`);
   return checklistData ? JSON.parse(checklistData) : [];
 };
 export const loadProfile = (userId) => {

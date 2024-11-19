@@ -6,18 +6,35 @@ import { Toast } from "../components/Toast"
 import { useCart, useProfile } from "@/hooks/useCart"
 import Image from "next/image"
 import { useState, useEffect } from "react"
-import { removeFromCart, updateQuantity } from "@/redux/cartSlice"
-
+import { clearCart, removeFromCart, updateQuantity } from "@/redux/cartSlice"
+import { useRouter } from "next/navigation"
+import { addCheckout } from "@/redux/checkoutSlice"
+import Link from "next/link"
 export default function CartPage() {
+  const router = useRouter()
   const dispatch = useDispatch()
   const userId = getCurrentUserId()
+
   useCart(userId)
   useProfile(userId)
-
   const { message, type } = useSelector((state) => state.cart)
   const [toast, setToast] = useState({ message: "", type: "" })
   const cartItems = useSelector((state) => state.cart.items[userId] || [])
   const profileData = useSelector((state) => state.profile.items[userId] || [])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [currentUser, setCurrentUser] = useState({ username: '', email: '' })
+  const [isLoading, setIsLoading] = useState(true); 
+  useEffect(() => {
+    const loginStatus = localStorage.getItem('isLoggedIn');
+    if (loginStatus === 'true') {
+      setIsLoggedIn(true);
+      const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      setCurrentUser(user);
+    } else {
+      router.push('/'); 
+    }
+    setIsLoading(false); 
+  }, [router]);
 
   const handleUpdateQuantity = (productId, newQuantity) => {
     if (newQuantity > 0) {
@@ -63,14 +80,59 @@ export default function CartPage() {
 
   const { name, phone, address1, address2, landmark, city, state, pincode } = profileData[0]
 
+  const handleCheckout = () => {
+    if (profileData.length > 0 && cartItems.length > 0) {
+      // Dispatch the addCheckout action to save checkout data first
+      dispatch(addCheckout({
+        userId,
+        items: cartItems.map((item) => ({
+          productId: item.id,
+          quantity: item.quantity,
+        })),
+        profileData: {
+          name,
+          phone,
+          address1,
+          address2,
+          landmark,
+          city,
+          state,
+          pincode,
+        },
+        totalPrice: total,
+      }));
+  
+      // Show the toast with a confirmation message (Order confirmed)
+      setToast({
+        message: "Order confirmed!",
+        type: "success",
+      });
+  
+      // After the toast is shown, clear the cart
+      setTimeout(() => {
+        dispatch(clearCart({ userId }));  // Clear the cart after checkout
+        // Reload the page or navigate as needed
+        // window.location.reload(); // Reload the page after clearing the cart
+      }, 2000); // Delay the cart clearing to let the user see the confirmation toast
+  
+    } else {
+      // Optionally, show a message if cart or profile data is missing
+      alert('Please ensure both your cart and profile data are complete before checking out.');
+    }
+  };
+  
+  
+
   return (
     <div className="container mx-auto p-4 mt-24">
       {cartItems.length === 0 ? (
         <div className="text-center p-8 bg-white shadow-md rounded-lg">
           <p className="text-2xl font-semibold text-gray-600">Your cart is empty</p>
+          <Link href={'/category/electronics'} as={'category/electronics'} legacyBehavior passHref>
           <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
             Continue Shopping
-          </button>
+          </button></Link>
+       
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
@@ -151,7 +213,7 @@ export default function CartPage() {
                     <span>Total:</span>
                     <span>${total.toFixed(2)}</span>
                   </div>
-                  <button className="w-full mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors">
+                  <button onClick={handleCheckout} className="w-full mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors">
                     Proceed to Checkout
                   </button>
                 </div>
