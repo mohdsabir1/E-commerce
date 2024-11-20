@@ -26,10 +26,13 @@ export default function ProductSlider({ products }) {
     setDomLoaded(true);
   }, []);
   useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
-    if (storedIsLoggedIn) {
-      setIsLoggedIn(true);
-    }
+    if (typeof window !== "undefined") {
+      const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
+      if (storedIsLoggedIn) {
+        setIsLoggedIn(true);
+      }
+    }  
+   
   }, []);
 
   const closeToast = () => {

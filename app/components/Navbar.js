@@ -36,7 +36,10 @@ export default function Navbar() {
   useEffect(() => {
     const user = getCurrentUserId(); // Fetch userId
     setUserId(user);
-    setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
+    if (typeof window !== "undefined") {
+      setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
+    }
+   
   }, []);
   const cartItems = useSelector((state) => state.cart.items[userId] || []);
   const itemCount = useMemo(() => {

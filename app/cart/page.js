@@ -25,16 +25,19 @@ export default function CartPage() {
   const [currentUser, setCurrentUser] = useState({ username: '', email: '' })
   const [isLoading, setIsLoading] = useState(true); 
   useEffect(() => {
-    const loginStatus = localStorage.getItem('isLoggedIn');
-    if (loginStatus === 'true') {
-      setIsLoggedIn(true);
-      const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-      setCurrentUser(user);
-    } else {
-      router.push('/'); 
+    // Ensure the code runs only on the client side
+    if (typeof window !== 'undefined') {
+      const loginStatus = localStorage.getItem('isLoggedIn')
+      if (loginStatus === 'true') {
+        setIsLoggedIn(true)
+        const user = JSON.parse(localStorage.getItem('currentUser') || '{}')
+        setCurrentUser(user)
+      } else {
+        router.push('/')
+      }
     }
-    setIsLoading(false); 
-  }, [router]);
+    setIsLoading(false)
+  }, [router])
 
   const handleUpdateQuantity = (productId, newQuantity) => {
     if (newQuantity > 0) {

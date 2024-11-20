@@ -24,10 +24,14 @@ export default function ProductDetail({ params }) {
   const { message, type } = useSelector((state) => state.cart);
 
   useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
+    if (typeof window !== "undefined") {
+      const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
     if (storedIsLoggedIn) {
       setIsLoggedIn(true);
     }
+    }
+
+    
     // After first mount, set isInitialMount to false
     setIsInitialMount(false);
   }, []);

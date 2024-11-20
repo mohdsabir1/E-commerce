@@ -21,15 +21,19 @@ export default function Wishlist() {
   const [currentUser, setCurrentUser] = useState({ username: '', email: '' })
   const [isLoading, setIsLoading] = useState(true); // For managing loading state
   useEffect(() => {
-    const loginStatus = localStorage.getItem('isLoggedIn');
-    if (loginStatus === 'true') {
-      setIsLoggedIn(true);
-      const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-      setCurrentUser(user);
-    } else {
-      router.push('/'); // Redirect to login if not logged in
+    if (typeof window !== "undefined") {
+      const loginStatus = localStorage.getItem('isLoggedIn');
+      if (loginStatus === 'true') {
+        setIsLoggedIn(true);
+        const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        setCurrentUser(user);
+      } else {
+        router.push('/'); // Redirect to login if not logged in
+      }
+      setIsLoading(false);
     }
-    setIsLoading(false); // Set loading to false after check
+
+    // Set loading to false after check
   }, [router]);
 
 

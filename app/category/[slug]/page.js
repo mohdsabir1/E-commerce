@@ -28,10 +28,15 @@ const CategoryPage = ({ params }) => {
   const subCategories = currentCategory?.subCat || [];
 
   useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
-    if (storedIsLoggedIn) {
-      setIsLoggedIn(true);
+    if (typeof window !== "undefined") {
+      const storedIsLoggedIn = localStorage.getItem("isLoggedIn");
+      if (storedIsLoggedIn) {
+        setIsLoggedIn(true);
+      }
     }
+
+
+   
   }, []);
 
   // Filter products based on category and subcategory
