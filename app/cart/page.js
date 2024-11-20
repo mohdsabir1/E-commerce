@@ -124,7 +124,7 @@ export default function CartPage() {
   
 
   return (
-    <div className="container mx-auto p-4 mt-24">
+    <div className="container mx-auto p-4 md:mt-10 lg:mt-24">
       {cartItems.length === 0 ? (
         <div className="text-center p-8 bg-white shadow-md rounded-lg">
           <p className="text-2xl font-semibold text-gray-600">Your cart is empty</p>
@@ -139,8 +139,8 @@ export default function CartPage() {
           <div className="md:col-span-8">
             <div className="bg-white shadow-md rounded-lg overflow-hidden">
               <div className="p-4 border-b flex justify-between items-center">
-                <h2 className="text-2xl font-bold">Shopping Cart</h2>
-                <div className="text-xl font-bold">Total: ${total.toFixed(2)}</div>
+                <h2 className="md:text-xl lg:text-2xl font-bold">Shopping Cart</h2>
+                <div className="md:text-md lg:text-xl font-bold">Total: ${total.toFixed(2)}</div>
               </div>
               <div className="p-4">
                 <div className="space-y-6">

@@ -1,15 +1,35 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  ChevronRight,
+  ShoppingCartIcon as LuShoppingCart,
+  HeartIcon as LuHeart,
+  UserIcon as LuUser,
+} from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+// Import categories from the JSON file
 import categories from "../../data/category.json";
-import { LuShoppingCart, LuHeart, LuUser } from "react-icons/lu";
 import { useSelector } from "react-redux";
 import { getCurrentUserId } from "@/utlis/cartUtlis";
-import { useSearchParams } from "next/navigation";
 
 export default function Navbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [expandedCategory, setExpandedCategory] = useState(null);
+
   const [userId, setUserId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -18,71 +38,165 @@ export default function Navbar() {
     setUserId(user);
     setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
   }, []);
-
-  // Make sure userId is available before using useSelector
   const cartItems = useSelector((state) => state.cart.items[userId] || []);
-
   const itemCount = useMemo(() => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   }, [cartItems]);
 
-  if (!categories || categories.length === 0) {
-    return <div>Loading categories...</div>;
-  }
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState(null); // Track active category for dropdown
-
-  // Toggle dropdown for category
-  const toggleDropdown = (categoryId) => {
-    setActiveCategory(activeCategory === categoryId ? null : categoryId);
+  const toggleCategory = (categoryId) => {
+    setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
   };
 
   return (
-    <nav
-      className={`fixed w-full z-10 top-0 left-0 transition-all duration-300 ease-in-out bg-white`}
-    >
+    <nav className="bg-white shadow-md transition-all duration-300 ease-in-out">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+        <div className="flex justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="">
-              <Image
-                src="/img/logo.webp"
-                alt="logo"
-                width={50}
-                height={50}
-                priority
-              />
+          <div className="flex-shrink-0 flex items-center">
+            <Link href="/" className="text-2xl font-bold text-gray-800">
+              Logo
             </Link>
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-1 ml-10">
-            {categories.map((cat) => (
-              <div
-                key={cat.id}
-                className="relative"
-                onMouseEnter={() => toggleDropdown(cat.id)} // Hover to show subcategories
-                onMouseLeave={() => toggleDropdown(null)} // Hide subcategories when hover ends
-              >
-                <Link
-                  href={`/category/${cat.slug}`}
-                  className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out"
-                >
-                  {cat.name}
-                </Link>
-
-                {/* Dropdown for Subcategories */}
-                {activeCategory === cat.id && (
-                  <div className="absolute left-0 top-5 w-48 mt-2 bg-white shadow-lg rounded-md overflow-hidden z-10">
-                    {cat.subCat.map((subCat) => (
+          <div className="hidden md:flex items-center justify-center flex-1 space-x-1">
+            {categories.map((category) => (
+              <DropdownMenu key={category.id}>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                  >
+                    {category.name}{" "}
+                    <ChevronDown className="ml-1 h-4 w-4 opacity-50" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 p-1">
+                  {category.subCat.map((subcategory) => (
+                    <DropdownMenuItem
+                      key={subcategory.id}
+                      className="hover:bg-gray-100 rounded-md"
+                    >
                       <Link
-                        key={subCat.id}
-                        href={`/category/${cat.slug}?subcat=${subCat.slug}`}
-                        className="block text-gray-700 hover:text-indigo-600 px-4 py-2 text-sm transition-all duration-300 ease-in-out"
+                        href={`/category/${category.slug}?subcat=${subcategory.slug}`}
+                        className="w-full px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
                       >
-                        {subCat.name}
+                        {subcategory.name}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ))}
+          </div>
+
+          {/* Login/Signup Buttons */}
+          <div className="hidden md:flex items-center space-x-4">
+            {isLoggedIn ? (
+              <>
+                <Link
+                  href={"/cart"}
+                  as={"/cart"}
+                  legacyBehavior
+                  passHref
+                  className=" text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                >
+                  <div className="relative">
+                    <LuShoppingCart className="h-6 w-6" />
+                    {itemCount > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                        {itemCount}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+                <Link
+                  href={"/wishlist"}
+                  as={"/wishlist"}
+                  legacyBehavior
+                  passHref
+                  className="text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                >
+                  <LuHeart className="h-6 w-6" />
+                </Link>
+                <Link
+                  href={"/my-profile"}
+                  as={"/my-profile"}
+                  legacyBehavior
+                  passHrefclassName="text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                >
+                  <LuUser className="h-6 w-6" />
+                </Link>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="ghost"
+                  className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+                >
+                  <Link href={"/login"} as={"/login"} legacyBehavior passHref>
+                          Login
+                  </Link>
+                </Button>
+                <Button className="bg-primary text-white hover:bg-primary-dark transition-colors duration-200">
+                  <Link
+                    href={"/sign-up"}
+                    as={"/sign-up"}
+                    legacyBehavior
+                    passHref
+                  >
+                    Sign Up
+                  </Link>
+                </Button>
+              </>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <Button
+              variant="ghost"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+              className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6" aria-hidden="true" />
+              ) : (
+                <Menu className="h-6 w-6" aria-hidden="true" />
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200">
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            {categories.map((category) => (
+              <div key={category.id} className="space-y-1">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-between text-left text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                  onClick={() => toggleCategory(category.id)}
+                >
+                  {category.name}
+                  {expandedCategory === category.id ? (
+                    <ChevronDown className="h-5 w-5" />
+                  ) : (
+                    <ChevronRight className="h-5 w-5" />
+                  )}
+                </Button>
+                {expandedCategory === category.id && (
+                  <div className="pl-4 space-y-1">
+                    {category.subCat.map((subcategory) => (
+                      <Link
+                        key={subcategory.id}
+                        href={`/category/${category.slug}?subcat=${subcategory.slug}`}
+                        className="block px-3 py-2 rounded-md text-base font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-200"
+                      >
+                        {subcategory.name}
                       </Link>
                     ))}
                   </div>
@@ -90,137 +204,74 @@ export default function Navbar() {
               </div>
             ))}
           </div>
-
-          {/* User Account / Login Section */}
-          <div className="hidden md:flex items-center space-x-4">
-            {isLoggedIn ? (
-              <>
-                <Link
-                  href="/cart"
-                  className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 mx-2 "
-                >
-                  <div className="relative py-2">
-                    {itemCount > 0 && (
-                      <div className="bottom-3 absolute left-4">
-                        <p className="flex h-2 w-3 items-center justify-center rounded-full bg-gray-800 p-2 text-xs text-white">
-                          {itemCount}
-                        </p>
-                      </div>
-                    )}
-                    <LuShoppingCart />
-                  </div>
-                </Link>
-                <Link
-                  href="/wishlist"
-                  className="text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 mx-2"
-                >
-                  <LuHeart />
-                </Link>
-                <Link
-                  href="/my-profile"
-                  className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 "
-                >
-                  <LuUser />
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className="bg-gray-200 text-black px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out hover:bg-gray-300 hover:shadow-md transform hover:-translate-y-0.5"
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/sign-up"
-                  className="bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ease-in-out hover:bg-gray-700 hover:shadow-lg transform hover:-translate-y-0.5"
-                >
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 transition-all duration-300 ease-in-out"
-              aria-expanded={isOpen}
-            >
-              <span className="sr-only">Open main menu</span>
-              {!isOpen ? (
-                <svg
-                  className="block h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="block h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden bg-white shadow-md absolute left-0 right-0 overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="px-6 py-4 space-y-4">
-          {categories.map((cat) => (
-            <div key={cat.id}>
-              <Link
-                href={`/category/${cat.slug}`}
-                className="block text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ease-in-out"
-                onClick={() => setIsOpen(false)}
-              >
-                {cat.name}
-              </Link>
-
-              {/* Dropdown for Mobile (Subcategories) */}
-              <div className="space-y-2 pl-4">
-                {cat.subCat.map((subCat) => (
+          <div className="pt-4 pb-3 border-t border-gray-200">
+            <div className="flex items-center justify-around px-5">
+              {isLoggedIn ? (
+                <>
                   <Link
-                    key={subCat.id}
-                    href={`/category/${cat.slug}?subcat=${subCat.slug}`}
-                    className="block text-gray-700 hover:text-indigo-600 px-4 py-2 text-sm transition-all duration-300 ease-in-out"
-                    onClick={() => setIsOpen(false)}
+                    href={"/cart"}
+                    as={"/cart"}
+                    legacyBehavior
+                    passHrefclassName=" text-gray-700 hover:text-gray-900 transition-colors duration-200"
                   >
-                    {subCat.name}
+                    <div className="relative">
+                      <LuShoppingCart className="h-6 w-6" />
+                      {itemCount > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                          {itemCount}
+                        </span>
+                      )}
+                    </div>
                   </Link>
-                ))}
-              </div>
+                  <Link
+                    href={"/wishlist"}
+                    as={"/wishlist"}
+                    legacyBehavior
+                    passHref
+                    className="text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                  >
+                    <LuHeart className="h-6 w-6" />
+                  </Link>
+                  <Link
+                    href={"/my-profile"}
+                    as={"/my-profile"}
+                    legacyBehavior
+                    passHrefclassName="text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                  >
+                    <LuUser className="h-6 w-6" />
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="ghost"
+                    className="text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+                  >
+                    <Link
+                      href={"/login"}
+                      as={"/login"}
+                      legacyBehavior
+                      passHref
+                    ></Link>
+                    Login
+                  </Button>
+                  <Button className="bg-primary text-white hover:bg-primary-dark transition-colors duration-200">
+                    <Link
+                      href={"/sign-up"}
+                      as={"/sign-up"}
+                      legacyBehavior
+                      passHref
+                    >
+                   
+                      Sign Up
+                    </Link>
+                  </Button>
+                </>
+              )}
             </div>
-          ))}
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 }
